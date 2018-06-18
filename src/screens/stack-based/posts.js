@@ -1,9 +1,15 @@
-import React, { Component } from 'react';
-import { StyleSheet, ScrollView, Dimensions } from 'react-native';
+import React, { Component, Fragment } from 'react';
+import {
+  StyleSheet,
+  ScrollView,
+  StatusBar,
+  DeviceEventEmitter
+} from 'react-native';
 import PostItem from '../../components/posts/post-item';
 import { ButtonIcon } from '../../components/common/button-icon';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Icon } from 'react-native-elements';
+import { apiPosts } from '../../common/api/api-posts';
 const list = [1, 1, 1, 1, 1, 1];
 const Sence = ({ data }) => {
   return (
@@ -31,6 +37,9 @@ export default class Post extends Component {
               style={{ paddingLeft: 5 }}
             />
           }
+          onPress={() => {
+            DeviceEventEmitter.emit('DRAWER_TOGGLE', true);
+          }}
           title={'Home'}
         />
       ),
@@ -45,22 +54,51 @@ export default class Post extends Component {
   };
   constructor(props) {
     super(props);
+    (this.state = {
+      data: []
+    }),
+      this.getData(0);
+  }
+  getData(index) {
+    let chooseData = '';
+    if (index == '0') {
+      chooseData = 'newest';
+    } else if (index == '2') {
+      chooseData = 'trending';
+    } else {
+      chooseData = 'editors-choice';
+    }
+    console.log('dd: ', chooseData);
+    apiPosts
+      .get(chooseData, 1)
+      .then(r => {
+        console.log(r);
+        this.setState({ data: r.data });
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
     return (
-      <ScrollableTabView
-        tabBarTextStyle={{ color: '#fff' }}
-        tabBarBackgroundColor={'#777BF3'}
-        tabBarUnderlineStyle={{ backgroundColor: '#fff' }}
-        ref={tabView => {
-          this.tabView = tabView;
-        }}
-      >
-        <Sence data={list} tabLabel="Newest" />
-        <Sence data={list} tabLabel="Editors choice" />
-        <Sence data={list} tabLabel="Trending" />
-      </ScrollableTabView>
+      <Fragment>
+        <StatusBar backgroundColor="#777BF3" barStyle="light-content" />
+        <ScrollableTabView
+          onChangeTab={i => {
+            console.log(i);
+            this.getData(i.i);
+          }}
+          tabBarTextStyle={{ color: '#fff' }}
+          tabBarBackgroundColor={'#777BF3'}
+          tabBarUnderlineStyle={{ backgroundColor: '#fff' }}
+          ref={tabView => {
+            this.tabView = tabView;
+          }}
+        >
+          <Sence data={this.state.data} tabLabel="Newest" />
+          <Sence data={this.state.data} tabLabel="Editors choice" />
+          <Sence data={this.state.data} tabLabel="Trending" />
+        </ScrollableTabView>
+      </Fragment>
     );
   }
 }

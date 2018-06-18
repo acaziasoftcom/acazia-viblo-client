@@ -6,7 +6,8 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  ImageBackground
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 const { width } = Dimensions.get('window');
@@ -84,14 +85,15 @@ class CustomDrawer extends Component {
   render() {
     return (
       <View style={{ marginTop: 20, justifyContent: 'center', flex: 1 }}>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 150
-          }}
-        >
-          <Text>Trương bk gn</Text>
+        <View style={styles.avatarWrapper}>
+          <Image
+            style={styles.imageAvatar}
+            source={{
+              uri:
+                'http://i.9mobi.vn/cf/images/2015/03/nkk/nhung-hinh-anh-dep-3.jpg'
+            }}
+          />
+          <Text style={styles.textName}>Nguyễn Công Trương</Text>
         </View>
         <ScrollView
           contentContainerStyle={{ backgroundColor: '#F1F2EC', flex: 1 }}
@@ -118,6 +120,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 50,
     alignItems: 'center'
+  },
+  avatarWrapper: {
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff'
+  },
+  imageAvatar: {
+    width: 75,
+    height: 75,
+    marginBottom: 5,
+    borderRadius: 38
+  },
+  textName: {
+    color: '#000',
+    fontSize: 16,
+    textAlign: 'center',
+    fontWeight: '500'
   }
 });
 

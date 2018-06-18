@@ -1,10 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { addNavigationHelpers } from 'react-navigation';
 import {
   DrawerLayoutAndroid,
   Platform,
-  View,
+  DeviceEventEmitter,
   Dimensions,
   StyleSheet,
   StatusBar
@@ -16,6 +14,16 @@ import { CustomDrawer } from '../components/custom-drawer-content';
 class Root extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    DeviceEventEmitter.addListener(
+      'DRAWER_TOGGLE',
+      isOpen => (isOpen ? this.drawer.openDrawer() : this.drawer.closeDrawer())
+    );
+    DeviceEventEmitter.addListener('DRAWER_CLOSE', () =>
+      this.drawer.closeDrawer()
+    );
   }
 
   render() {

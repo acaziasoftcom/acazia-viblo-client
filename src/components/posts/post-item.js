@@ -37,7 +37,13 @@ const icons = [
   }
 ];
 export default class PostItem extends Component {
+  handleContentsShort(value) {
+    return value.split('↵↵↵↵');
+  }
   render() {
+    const { title, contents_short, user } = this.props.value;
+    const { avatar, name, username } = user.data;
+    //console.log(this.handleContentsShort(contents_short));
     return (
       <TouchableOpacity
         style={{
@@ -53,16 +59,15 @@ export default class PostItem extends Component {
           <Image
             style={{ width: 45, height: 45, borderRadius: 23 }}
             source={{
-              uri:
-                'http://i.9mobi.vn/cf/images/2015/03/nkk/nhung-hinh-anh-dep-3.jpg'
+              uri: avatar[0]
             }}
           />
           <View style={{ marginLeft: 10 }}>
-            <Text style={{ fontSize: 13 }}>Trương bk hn</Text>
-            <Text style={{ fontSize: 12 }}>Trương bk hn</Text>
+            <Text style={{ fontSize: 13 }}>{name}</Text>
+            <Text style={{ fontSize: 12 }}>{username}</Text>
           </View>
         </View>
-        <Text style={styles.title}>Trương pro vip bn vd</Text>
+        <Text style={styles.title}>{title}</Text>
         <View style={styles.containerIcon}>
           {icons.map(value => {
             if (value.id !== 1) {
@@ -87,7 +92,15 @@ export default class PostItem extends Component {
             }
           })}
         </View>
-        <Text>ssssssssssss</Text>
+        {/* {this.handleContentsShort(contents_short).length == 3 ? (
+          <Image
+            style={{ width: 300, height: 45, borderRadius: 23 }}
+            source={{
+              uri: this.handleContentsShort(contents_short)[1]
+            }}
+          />
+        ) : null} */}
+        <Text>{contents_short}</Text>
       </TouchableOpacity>
     );
   }

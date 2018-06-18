@@ -10,7 +10,7 @@ import {
   StatusBar
 } from 'react-native';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
-import AppNavigator from '../navigations/app-navigator';;
+import AppNavigator from '../navigations/app-navigator';
 import { CustomDrawer } from '../components/custom-drawer-content';
 
 class Root extends Component {
@@ -39,8 +39,8 @@ class Root extends Component {
           //drawerLockMode={this.getDrawerLockMode()}
           useNativeAnimations
         >
-         <StatusBar backgroundColor="#E4E4F0" barStyle={'dark-content'} />
-          <AppNavigator/>
+          <StatusBar backgroundColor="#E4E4F0" barStyle={'dark-content'} />
+          <AppNavigator />
         </DrawerLayout>
       </Fragment>
     );

@@ -47,6 +47,7 @@ export default class PostItem extends Component {
           paddingTop: 4,
           paddingBottom: 4
         }}
+        key={Math.random()}
       >
         <View style={styles.conainerHeader}>
           <Image
@@ -67,6 +68,7 @@ export default class PostItem extends Component {
             if (value.id !== 1) {
               return (
                 <Item
+                  key={Math.random()}
                   style={{ marginLeft: 20 }}
                   icon={value.icon}
                   count={value.count}
@@ -75,7 +77,12 @@ export default class PostItem extends Component {
               );
             } else {
               return (
-                <Item icon={value.icon} count={value.count} type={value.type} />
+                <Item
+                  key={Math.random()}
+                  icon={value.icon}
+                  count={value.count}
+                  type={value.type}
+                />
               );
             }
           })}

@@ -1,21 +1,29 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { addNavigationHelpers } from 'react-navigation';
 import {
   DrawerLayoutAndroid,
   Platform,
-  View,
+  DeviceEventEmitter,
   Dimensions,
   StyleSheet,
   StatusBar
 } from 'react-native';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
-import AppNavigator from '../navigations/app-navigator';;
+import AppNavigator from '../navigations/app-navigator';
 import { CustomDrawer } from '../components/custom-drawer-content';
 
 class Root extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    DeviceEventEmitter.addListener(
+      'DRAWER_TOGGLE',
+      isOpen => (isOpen ? this.drawer.openDrawer() : this.drawer.closeDrawer())
+    );
+    DeviceEventEmitter.addListener('DRAWER_CLOSE', () =>
+      this.drawer.closeDrawer()
+    );
   }
 
   render() {
@@ -39,8 +47,8 @@ class Root extends Component {
           //drawerLockMode={this.getDrawerLockMode()}
           useNativeAnimations
         >
-         <StatusBar backgroundColor="#E4E4F0" barStyle={'dark-content'} />
-          <AppNavigator/>
+          <StatusBar backgroundColor="#E4E4F0" barStyle={'dark-content'} />
+          <AppNavigator />
         </DrawerLayout>
       </Fragment>
     );

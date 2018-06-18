@@ -8,8 +8,6 @@ import React, { Component } from 'react';
 import Root from './screens/root';
 export default class App extends Component {
   render() {
-    return (
-      <Root/>
-    );
+    return <Root />;
   }
 }

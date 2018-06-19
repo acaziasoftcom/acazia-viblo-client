@@ -85,7 +85,7 @@ class CustomDrawer extends Component {
     return (
       <View style={{ marginTop: 20, justifyContent: 'center', flex: 1 }}>
         <View style={styles.avatarWrapper}>
-          <Image
+          <ImageBackground
             style={styles.imageAvatar}
             source={{
               uri:

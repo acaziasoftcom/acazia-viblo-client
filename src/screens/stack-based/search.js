@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import HeaderSearch from '../../components/header/headerSearch';
-// import ModalManager from '../../components/modal/modalManager';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
+import { Header } from '../../components/header/header';
+import ModalManager from '../../components/modal/modalManager';
 import { Icon } from 'react-native-elements';
+import { ButtonIcon } from '../../components/common/button-icon';
 
 const PickerCus = ({ name, onPress }) => {
   return (
@@ -34,47 +41,116 @@ export default class Search extends Component {
   constructor() {
     super();
     this.state = {
-      modalVisable: false,
-      isType: false
+      textSearch: '',
+      isType: false,
+      type: '',
+      featured: '',
+      modalVisible: false
     };
     this.isPost = true;
     (this.types = ['Post', 'Question']),
-      (this.featureds = ['Post', 'Question']);
+      (this.featureds = [
+        'Best match',
+        'Most clipped',
+        'Most viewed',
+        'most rated',
+        'Most commented',
+        'Newest',
+        'Oldest'
+      ]);
   }
 
-  showModal = isType => {
-    alert('show modal');
+  componentWillMount() {
     this.setState({
-      modalVisable: true,
+      type: this.types[0],
+      featured: this.featureds[0]
+    });
+  }
+  showModal = isType => {
+    this.setState({
+      modalVisible: true,
       isType: isType ? true : false
     });
   };
-  contentPicker = () => {
-    let listDetail = this.state.isType ? this.types : this.featureds;
-    return (
-      <View>
-        {listDetail.map(item => {
-          return (
-            <View>
-              <Text>{item}</Text>
-            </View>
-          );
-        })}
-      </View>
-    );
+
+  setTypeAndFeatured = value => {
+    if (this.state.isType) {
+      this.setState({
+        type: value,
+        modalVisible: false
+      });
+    } else {
+      this.setState({
+        featured: value,
+        modalVisible: false
+      });
+    }
   };
+  clearTextSearch() {
+    this.setState({
+      textSearch: ''
+    });
+  }
   render() {
+    const { goBack } = this.props.navigation;
     let isType = true;
+    let listDetail = this.state.isType ? this.types : this.featureds;
+    console.log(listDetail);
+    console.log(this.state.modalVisible);
+    console.log(this.state.type);
+    console.log(this.state.featured);
     return (
       <View style={styles.container}>
-        {/* <ModalManager
-          modalContent={this.contentPicker}
-          modalVisable={this.state.modalVisable}
-        /> */}
-        <HeaderSearch />
+        <ModalManager
+          contentModal={listDetail.map(item => {
+            return (
+              <TouchableOpacity onPress={() => this.setTypeAndFeatured(item)}>
+                <View style={{ margin: 10 }}>
+                  <Text style={{ fontSize: 16, color: '#000' }}>{item}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+          modalVisible={this.state.modalVisible}
+        />
+        <Header
+          leftOnPess={() => goBack()}
+          midElement={
+            <TextInput
+              style={styles.text_input}
+              placeholder="Search Viblo..."
+              placeholderTextColor="#fff"
+              underlineColorAndroid="transparent"
+              fontSize={16}
+              onChangeText={text => this.setState({ textSearch: text })}
+              value={this.state.textSearch}
+            />
+          }
+          rightElement={
+            <ButtonIcon
+              onPress={() => this.setState({ textSearch: '' })}
+              extraElement={
+                <Icon
+                  name="close"
+                  type="material-community"
+                  color="white"
+                  style={{ width: 30, height: 30 }}
+                />
+              }
+            />
+          }
+          rightSearch={() => this.clearTextSearch()}
+          value={this.state.textSearch}
+        />
         <View style={{ flexDirection: 'row' }}>
-          <PickerCus name="Post" onPress={() => this.showModal(isType)} />
-          <PickerCus name="Best match" onPress={() => this.showModal()} />
+          <PickerCus
+            name={this.state.type}
+            onPress={() => this.showModal(isType)}
+          />
+          <PickerCus
+            name={this.state.featured}
+            onPress={() => this.showModal()}
+          />
         </View>
       </View>
     );
@@ -85,5 +161,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
+  },
+  text_input: {
+    height: 40,
+    width: 250,
+    color: '#fff'
   }
 });

@@ -1,16 +1,75 @@
 import React, { Component } from 'react';
-import { Modal } from 'react-native';
+import {
+  View,
+  Modal,
+  TouchableWithoutFeedback,
+  Dimensions
+} from 'react-native';
 
+const { width } = Dimensions.get('window');
 export default class ModalManager extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalVisible: this.props.modalVisible ? this.props.modalVisible : false
+    };
+  }
+  componentWillMount() {
+    console.log('modal ', this.props.modalVisible);
+    modalVisible = this.props.modalVisible;
+    this.setState({
+      modalVisible: modalVisible ? modalVisible : false
+    });
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      modalVisible: nextProps.modalVisible
+    });
+  }
   render() {
-    let content = this.props.modalContent;
+    let contentModal = this.props.contentModal;
+    console.log('visible', this.props.modalVisible);
     return (
       <Modal
-        animationType="fade"
-        transparent={false}
-        visible={this.props.modaelVisisble}
+        animationType="none"
+        transparent
+        visible={this.state.modalVisible}
+        onRequestClose={() => {
+          this.setState({
+            modalVisible: false
+          });
+        }}
       >
-        {content}
+        <TouchableWithoutFeedback
+          onPress={() =>
+            this.setState({
+              modalVisible: false
+            })
+          }
+        >
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: 'rgba(15, 15, 15, 0.6)',
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingVertical: 40
+            }}
+          >
+            <View
+              style={{
+                width: width * 0.72,
+                paddingVertical: 20,
+                paddingLeft: 10,
+                justifyContent: 'center',
+                backgroundColor: '#fff',
+                borderRadius: 5
+              }}
+            >
+              {contentModal}
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
       </Modal>
     );
   }

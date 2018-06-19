@@ -45,6 +45,7 @@ export default class Post extends Component {
       ),
       headerRight: (
         <ButtonIcon
+          onPress={() => navigation.navigate('SearchScreen')}
           extraElement={
             <Icon name="magnify" type="material-community" color="#fff" />
           }

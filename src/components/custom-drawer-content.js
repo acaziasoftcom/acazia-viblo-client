@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  ImageBackground
+  Image
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 const { width } = Dimensions.get('window');

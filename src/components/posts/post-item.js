@@ -54,6 +54,11 @@ export default class PostItem extends Component {
           paddingBottom: 4
         }}
         key={Math.random()}
+        onPress={() => {
+          this.props.navigation.push('PostDetailsScreen', {
+            value: this.props.value
+          });
+        }}
       >
         <View style={styles.conainerHeader}>
           <Image

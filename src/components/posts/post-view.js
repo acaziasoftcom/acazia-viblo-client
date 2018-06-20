@@ -11,7 +11,7 @@ export default class PostsView extends Component {
     apiPosts
       .get(this.props.chooseData, 1)
       .then(r => {
-        console.log(r);
+        console.log(this.props);
         this.setState({ data: r.data });
       })
       .catch(err => console.log(err));

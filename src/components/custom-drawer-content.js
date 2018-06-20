@@ -6,10 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  Image
+  Image,
+  DeviceEventEmitter
 } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
 const { width } = Dimensions.get('window');
+import { navigate } from '../actions/actions-navigaion';
 const ItemOption = ({ name, icon, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.containerItem}>
@@ -21,13 +24,15 @@ const ItemOption = ({ name, icon, onPress }) => {
 
 class CustomDrawer extends Component {
   menuOptions = () => {
+    const { dispatch } = this.props;
     let options = [
       {
         id: 1,
         name: 'Posts',
         icon: 'book-open',
         onPress: () => {
-          alert('vao 1');
+          dispatch(navigate('SearchScreen'));
+          DeviceEventEmitter.emit('DRAWER_TOGGLE');
         }
       },
       {
@@ -81,11 +86,16 @@ class CustomDrawer extends Component {
     ];
     return options;
   };
+
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
   render() {
     return (
       <View style={{ marginTop: 20, justifyContent: 'center', flex: 1 }}>
         <View style={styles.avatarWrapper}>
-          <ImageBackground
+          <Image
             style={styles.imageAvatar}
             source={{
               uri:
@@ -140,4 +150,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export { CustomDrawer };
+const mapStateToProps = state => state;
+const mapDispatchToProps = dispatch => ({ dispatch });
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CustomDrawer);

@@ -39,4 +39,5 @@ const stackNavigatorConfig = {
 };
 
 const AppNavigator = StackNavigator(routeConfig, stackNavigatorConfig);
-export default AppNavigator;
+
+export { AppNavigator };

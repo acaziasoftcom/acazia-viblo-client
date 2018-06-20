@@ -41,10 +41,7 @@ const Header = ({
       {React.isValidElement(title) ? (
         title
       ) : (
-        <Text
-          semiBold
-          style={[styles.whiteText, { color: titleColor }, styleTitle]}
-        >
+        <Text style={[styles.whiteText, { color: titleColor }, styleTitle]}>
           {title}
         </Text>
       )}

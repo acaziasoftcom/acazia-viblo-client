@@ -4,14 +4,14 @@ import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-const ButtonBack = ({ onPress, color = 'black', style }) => {
+const ButtonBack = ({ onPress, color = 'black', style, size }) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.touch, style]}>
       <Icon
         type="material-community"
         style={styles.icon}
         color={color}
-        size={20}
+        size={size ? size : 30}
         name="arrow-left"
       />
     </TouchableOpacity>

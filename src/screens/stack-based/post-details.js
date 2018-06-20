@@ -49,9 +49,7 @@ export default class PostDetails extends Component {
               </View>
             </View>
           }
-          styleTitle={{ fontSize: 19 }}
           style={{ width: width, marginTop: Platform.OS === 'ios' ? 20 : 0 }}
-          titleColor={'black'}
           headerLeft={
             <ButtonBack
               onPress={() => {

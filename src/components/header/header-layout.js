@@ -18,7 +18,6 @@ const Header = ({
   headerLeft,
   headerRight,
   title,
-  titleColor = 'black',
   absolute,
   transparent,
   style,

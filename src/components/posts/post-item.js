@@ -34,6 +34,12 @@ const icons = [
     icon: 'sort',
     count: 0,
     type: 'font-awesome'
+  },
+  {
+    id: 5,
+    icon: 'paste',
+    count: 0,
+    type: 'font-awesome'
   }
 ];
 export default class PostItem extends Component {
@@ -41,17 +47,25 @@ export default class PostItem extends Component {
     return value.split('↵↵↵↵');
   }
   render() {
-    const { title, contents_short, user } = this.props.value;
+    const isSeries = this.props.isSeries;
+    const value = this.props.value;
+    const { title, contents_short, user, contents } = value;
     const { avatar, name, username } = user.data;
+    let count = [
+      value.views_count,
+      value.clips_count,
+      value.comments_count,
+      value.points,
+      value.posts_count
+    ];
     //console.log(this.handleContentsShort(contents_short));
     return (
       <TouchableOpacity
         style={{
           backgroundColor: '#fff',
           marginBottom: 5,
-          paddingLeft: 10,
-          paddingTop: 4,
-          paddingBottom: 4
+          paddingHorizontal: 10,
+          paddingVertical: 4
         }}
         key={Math.random()}
         onPress={() => {
@@ -68,33 +82,25 @@ export default class PostItem extends Component {
             }}
           />
           <View style={{ marginLeft: 10 }}>
-            <Text style={{ fontSize: 13 }}>{name}</Text>
-            <Text style={{ fontSize: 12 }}>{username}</Text>
+            <Text style={{ fontSize: 14, color: '#000' }}>{name}</Text>
+            <Text style={{ fontSize: 13 }}>{username}</Text>
           </View>
         </View>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.containerIcon}>
-          {icons.map(value => {
-            if (value.id !== 1) {
+          {icons.map(icon => {
+            if (icon.id === 4 && isSeries);
+            else if (icon.id === 5 && !isSeries);
+            else
               return (
                 <Item
                   key={Math.random()}
-                  style={{ marginLeft: 20 }}
-                  icon={value.icon}
-                  count={value.count}
-                  type={value.type}
+                  style={{ marginLeft: icon.id == 1 ? 0 : 20 }}
+                  icon={icon.icon}
+                  count={count[icon.id - 1]}
+                  type={icon.type}
                 />
               );
-            } else {
-              return (
-                <Item
-                  key={Math.random()}
-                  icon={value.icon}
-                  count={value.count}
-                  type={value.type}
-                />
-              );
-            }
           })}
         </View>
         {/* {this.handleContentsShort(contents_short).length == 3 ? (
@@ -105,7 +111,13 @@ export default class PostItem extends Component {
             }}
           />
         ) : null} */}
-        <Text>{contents_short}</Text>
+        <Text
+          style={{ fontSize: 15, color: '#000' }}
+          numberOfLines={4}
+          ellipsizeMode="tail"
+        >
+          {isSeries ? contents : contents_short + '...'}
+        </Text>
       </TouchableOpacity>
     );
   }

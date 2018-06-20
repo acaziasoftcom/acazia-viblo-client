@@ -6,10 +6,12 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import { Header } from '../../components/header/header';
+// import { Header } from '../../components/header/header';
 import ModalManager from '../../components/modal/modalManager';
 import { Icon } from 'react-native-elements';
-import { ButtonIcon } from '../../components/common/button-icon';
+import { Header } from '../../components/header/header-layout';
+import { ButtonBack } from '../../components/header/button-back';
+import { ButtonX } from '../../components/header/button-x';
 
 const PickerCus = ({ name, onPress }) => {
   return (
@@ -95,10 +97,6 @@ export default class Search extends Component {
     const { goBack } = this.props.navigation;
     let isType = true;
     let listDetail = this.state.isType ? this.types : this.featureds;
-    console.log(listDetail);
-    console.log(this.state.modalVisible);
-    console.log(this.state.type);
-    console.log(this.state.featured);
     return (
       <View style={styles.container}>
         <ModalManager
@@ -114,8 +112,8 @@ export default class Search extends Component {
           modalVisible={this.state.modalVisible}
         />
         <Header
-          leftOnPess={() => goBack()}
-          midElement={
+          headerLeft={<ButtonBack color="#fff" onPress={() => goBack()} />}
+          title={
             <TextInput
               style={styles.text_input}
               placeholder="Search Viblo..."
@@ -126,18 +124,8 @@ export default class Search extends Component {
               value={this.state.textSearch}
             />
           }
-          rightElement={
-            <ButtonIcon
-              onPress={() => this.setState({ textSearch: '' })}
-              extraElement={
-                <Icon
-                  name="close"
-                  type="material-community"
-                  color="white"
-                  style={{ width: 30, height: 30 }}
-                />
-              }
-            />
+          headerRight={
+            <ButtonX onPress={() => this.setState({ textSearch: '' })} />
           }
           rightSearch={() => this.clearTextSearch()}
           value={this.state.textSearch}

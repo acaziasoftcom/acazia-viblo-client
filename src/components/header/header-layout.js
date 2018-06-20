@@ -18,7 +18,6 @@ const Header = ({
   headerLeft,
   headerRight,
   title,
-  titleColor = 'black',
   absolute,
   transparent,
   style,
@@ -41,12 +40,7 @@ const Header = ({
       {React.isValidElement(title) ? (
         title
       ) : (
-        <Text
-          semiBold
-          style={[styles.whiteText, { color: titleColor }, styleTitle]}
-        >
-          {title}
-        </Text>
+        <Text style={[styles.whiteText, styleTitle]}>{title}</Text>
       )}
       {headerRight ? headerRight : <ButtonBlank />}
     </View>

@@ -36,13 +36,17 @@ const Header = ({
 
   return (
     <View style={[applied, style]}>
-      {headerLeft}
-      {React.isValidElement(title) ? (
-        title
-      ) : (
-        <Text style={[styles.whiteText, styleTitle]}>{title}</Text>
-      )}
-      {headerRight ? headerRight : <ButtonBlank />}
+      <View style={{ flex: 1 }}>{headerLeft}</View>
+      <View style={{ flex: 5 }}>
+        {React.isValidElement(title) ? (
+          title
+        ) : (
+          <Text style={[styles.whiteText, styleTitle]}>{title}</Text>
+        )}
+      </View>
+      <View style={{ flex: 1 }}>
+        {headerRight ? headerRight : <ButtonBlank />}
+      </View>
     </View>
   );
 };
@@ -55,7 +59,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
     width: '100%',
     alignItems: 'center',
-    justifyContent: 'space-between',
     flexDirection: 'row',
     backgroundColor: '#5387c6'
   },

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { View, ScrollView, DeviceEventEmitter } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  DeviceEventEmitter,
+  TouchableOpacity
+} from 'react-native';
 import { ButtonMenu } from '../../components/header/button-menu';
 import { apiSeries } from '../../common/api/api-series';
 import { Header } from '../../components/header/header-layout';
@@ -25,12 +31,13 @@ export default class Series extends Component {
         this.setState({
           listSeriesData: result.data
         });
-        console.log('result', this.state.listSeriesData);
+        // console.log('result', this.state.listSeriesData);
       })
       .catch(e => console.log(e));
   };
   render() {
     let listData = this.state.listSeriesData;
+    const { navigate } = this.props.navigation;
     return (
       <View>
         <Header
@@ -45,15 +52,23 @@ export default class Series extends Component {
           styleTitle={{ color: '#fff' }}
         />
         <ScrollView>
-          {listData.map(value => {
-            console.log('item', value);
+          {listData.map(data => {
+            console.log('item', data.hash_id);
             return (
               <PostItem
                 key={Math.random()}
-                value={value}
-                {...this.props}
+                value={data}
                 isSeries
+                {...this.props}
+                onPress={() =>
+                  this.props.navigation.navigate('SeriesDetailScreen', {
+                    hashId: data.hash_id
+                  })
+                }
               />
+              // <TouchableOpacity onPress={() => navigate('SeriesDetailScreen')}>
+              //   <Text>next</Text>
+              // </TouchableOpacity>
             );
           })}
         </ScrollView>

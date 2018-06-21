@@ -24,7 +24,22 @@ export default class PostDetails extends Component {
   };
   constructor(props) {
     super(props);
+    this.state = {
+      data: {}
+    };
   }
+
+  getPostDetail = () => {
+    apiPosts
+      .getPost(slug)
+      .then(r => {
+        console.log(r);
+        this.setState({ data: r.post.data });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   render() {
     const { user } = this.props.navigation.state.params.value;
@@ -83,7 +98,7 @@ export default class PostDetails extends Component {
             this.tabView = tabView;
           }}
         >
-          <DetailsView {...this.props} tabLabel="Post" />
+          <DetailsView {...this.props} tabLabel="Post" data={this.state.data} />
           <DetailsView {...this.props} tabLabel="Comments" />
         </ScrollableTabView>
       </Fragment>

@@ -2,19 +2,21 @@ import { StackNavigator } from 'react-navigation';
 import Post from '../screens/stack-based/posts';
 import Search from '../screens/stack-based/search';
 import PostDetails from '../screens/stack-based/post-details';
-import Series from '../screens/stack-based/series'
+import Series from '../screens/stack-based/series';
 import { Dimensions } from 'react-native';
+import SeriesDetail from '../screens/stack-based/series-detail';
 const { width } = Dimensions.get('window');
 
 const routeConfig = {
   PostScreen: { screen: Post },
   SearchScreen: { screen: Search },
   PostDetailsScreen: { screen: PostDetails },
-  Series: { screen: Series }
+  SeriesScreen: { screen: Series },
+  SeriesDetailScreen: { screen: SeriesDetail }
 };
 
 const stackNavigatorConfig = {
-  initialRouteName: 'PostScreen',
+  initialRouteName: 'SeriesScreen',
   mode: 'card', // modal - card
   navigationOptions: {
     gesturesEnabled: false,

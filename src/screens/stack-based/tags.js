@@ -1,27 +1,20 @@
 import React, { Component, Fragment } from 'react';
-import { ScrollView, DeviceEventEmitter, StyleSheet } from 'react-native';
-import QuesionItem from '../../components/questions/question-item';
+import {
+  Platform,
+  DeviceEventEmitter,
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+  TouchableOpacity,
+  Image
+} from 'react-native';
 import { apiQuestions } from '../../common/api/api-questions';
 import { ButtonIcon } from '../../components/common/button-icon';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Icon } from 'react-native-elements';
-
-const ShowQuestions = ({ data, navigation }) => {
-  return (
-    <ScrollView>
-      {data.map(value => {
-        console.log('item', value);
-        return (
-          <QuesionItem
-            key={Math.random()}
-            value={value}
-            navigation={navigation}
-          />
-        );
-      })}
-    </ScrollView>
-  );
-};
+import { apiTags } from '../../common/api/api-tags';
+const { width } = Dimensions.get('window').width;
 export default class Tags extends Component {
   static navigationOptions = ({ navigation }) => {
     const { goBack } = navigation;
@@ -55,8 +48,8 @@ export default class Tags extends Component {
   }
 
   componentWillMount = () => {
-    apiQuestions
-      .getQuestionsFeed('newest', { page: 1, limit: 20 })
+    apiTags
+      .getTags({ page: 1, limit: 20 })
       .then(r => {
         console.log(r);
         this.setState({ data: r.data });
@@ -64,31 +57,41 @@ export default class Tags extends Component {
       .catch(err => console.log(err));
   };
 
+  renderRowItem = info => {
+    return (
+      <TouchableOpacity
+        style={{
+          marginBottom: 10,
+          marginLeft: 10,
+          marginRight: 10,
+          marginTop: 10,
+          alignItems: 'center',
+          justifyContent:'center',
+          width: 85
+        }}
+      >
+        <Image
+          style={styles.imageAvatar}
+          source={{
+            uri: info.item.image
+          }}
+        />
+        <Text>{info.item.name}</Text>
+      </TouchableOpacity>
+    );
+  };
+
   render() {
     return (
       <Fragment>
-        <ScrollableTabView
-          initialPage={0}
-          // onChangeTab={({ i }) => this.onChangeTab(i)}
-          prerenderingSiblingsNumber={0}
-          tabBarTextStyle={{ color: '#fff' }}
-          tabBarBackgroundColor={'#5387c6'}
-          tabBarUnderlineStyle={{ backgroundColor: '#fff' }}
-          ref={tabView => {
-            this.tabView = tabView;
-          }}
-        >
-          <ShowQuestions
-            navigation={this.props.navigation}
-            data={this.state.data}
-            tabLabel="Newest"
-          />
-          <ShowQuestions
-            navigation={this.props.navigation}
-            data={this.state.data}
-            tabLabel="Unsolved"
-          />
-        </ScrollableTabView>
+        <FlatList
+          style={styles.container}
+          data={this.state.data}
+          numColumns={3}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={this.renderRowItem}
+          contentContainerStyle={{ alignItems: 'center', marginBottom: 10 }}
+        />
       </Fragment>
     );
   }
@@ -104,5 +107,15 @@ const styles = StyleSheet.create({
       height: 0
     },
     elevation: 0
+  },
+  container: {
+    width: width,
+    flex: 1,
+    paddingTop: 10,
+    backgroundColor: '#fdfdfd'
+  },
+  imageAvatar: {
+    width: 85,
+    height: 85
   }
 });

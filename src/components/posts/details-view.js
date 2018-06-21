@@ -13,30 +13,18 @@ export default class DetailsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null
+      data: this.props.data
     };
-    const { slug } = this.props.navigation.state.params.value;
-    console.log(this.props.navigation.state.params.value);
-    apiPosts
-      .getPost(slug)
-      .then(r => {
-        console.log(r);
-        this.setState({ data: r.post.data });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    console.log(this.props.data);
+    // console.log(this.props.navigation.state.params.value);
   }
   render() {
-    if (this.state.data) {
-      var { contents, tags, title } = this.state.data;
-      // canonical_url  is webview in result api
-    }
+    var { contents, tags, title } = this.state.data;
+    // canonical_url  is webview in result api
+
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={{ fontSize: 20, fontWeight: '500' }}>
-          {this.state.data !== null ? title : ''}
-        </Text>
+        <Text style={{ fontSize: 20, fontWeight: '500' }}>{title}</Text>
         <View style={styles.title}>
           {this.state.data &&
             tags.data.map(value => {
@@ -50,10 +38,9 @@ export default class DetailsView extends Component {
               );
             })}
         </View>
-        <Text style={{ fontSize: 15 }}>
-          {this.state.data !== null ? contents : ''}
-        </Text>
+        <Text style={{ fontSize: 15 }}>{contents}</Text>
       </ScrollView>
+      // <WebView source={{ uri: url }} style={{ marginTop: 20 }} />
     );
   }
 }

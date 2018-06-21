@@ -11,7 +11,7 @@ const ButtonX = ({ onPress, style }) => {
         <Icon
           name="close"
           type="material-community"
-          color="white"
+          color="#fff"
           style={{ width: 30, height: 30 }}
         />
       }

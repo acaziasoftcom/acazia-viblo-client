@@ -1,7 +1,7 @@
 import { api } from './index';
 
-export const apiComments = {
-  getTags: (params?: Request) => api.get('tags', { params }),
+export const apiTags = {
+  getTags: (params?: Request) => api.get('/tags', { params }),
 
   getTagInfo: tag => api.get(`/tags/${tag}`),
 

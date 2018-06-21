@@ -45,6 +45,7 @@ const icons = [
 export default class PostItem extends Component {
   render() {
     const isSeries = this.props.isSeries;
+    console.log('isSeries', isSeries);
     const value = this.props.value;
     const { title, contents_short, user, contents } = value;
     const { avatar, name, username } = user.data;
@@ -55,6 +56,7 @@ export default class PostItem extends Component {
       value.points,
       value.posts_count
     ];
+    let onPress = this.props.onPress;
     //console.log(this.handleContentsShort(contents_short));
     return (
       <TouchableOpacity
@@ -65,11 +67,15 @@ export default class PostItem extends Component {
           paddingVertical: 4
         }}
         key={Math.random()}
-        onPress={() => {
-          this.props.navigation.push('PostDetailsScreen', {
-            value: this.props.value
-          });
-        }}
+        onPress={
+          isSeries
+            ? onPress
+            : () => {
+                this.props.navigation.push('PostDetailsScreen', {
+                  value: this.props.value
+                });
+              }
+        }
       >
         <View style={styles.conainerHeader}>
           <Image

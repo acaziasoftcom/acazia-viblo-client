@@ -7,36 +7,37 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
-import { apiPosts } from '../../common/api/api-posts';
 const { width } = Dimensions.get('window');
 export default class DetailsView extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: this.props.data
-    };
-    console.log(this.props.data);
-    // console.log(this.props.navigation.state.params.value);
   }
   render() {
-    var { contents, tags, title } = this.state.data;
+    if (this.props.data) {
+      var { contents, tags, title } = this.props.data;
+    }
+    // console.log('da', tags);
+    console.log('tag', tags);
+    let tagsData = [];
+    if (tags) {
+      tagsData = tags.data;
+    }
     // canonical_url  is webview in result api
-
+    // let url = this.props.postUrl;
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={{ fontSize: 20, fontWeight: '500' }}>{title}</Text>
         <View style={styles.title}>
-          {this.state.data &&
-            tags.data.map(value => {
-              return (
-                <TouchableOpacity
-                  key={Math.random()}
-                  style={styles.containerIcon}
-                >
-                  <Text style={styles.textNameIcon}>{value.name}</Text>
-                </TouchableOpacity>
-              );
-            })}
+          {tagsData.map(value => {
+            return (
+              <TouchableOpacity
+                key={Math.random()}
+                style={styles.containerIcon}
+              >
+                <Text style={styles.textNameIcon}>{value.name}</Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
         <Text style={{ fontSize: 15 }}>{contents}</Text>
       </ScrollView>

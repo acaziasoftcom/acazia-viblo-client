@@ -22,7 +22,7 @@ const routeConfig = {
 };
 
 const stackNavigatorConfig = {
-  initialRouteName: 'SeriesScreen',
+  initialRouteName: 'PostScreen',
   mode: 'card', // modal - card
   navigationOptions: {
     gesturesEnabled: false,

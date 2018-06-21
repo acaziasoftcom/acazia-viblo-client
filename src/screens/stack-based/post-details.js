@@ -14,6 +14,7 @@ import { Header } from '../../components/header/header-layout';
 import { ButtonBack } from '../../components/header/button-back';
 import DetailsView from '../../components/posts/details-view';
 import { Icon } from 'react-native-elements';
+import { apiPosts } from '../../common/api/api-posts';
 const { width } = Dimensions.get('window');
 export default class PostDetails extends Component {
   static navigationOptions = () => {
@@ -28,12 +29,16 @@ export default class PostDetails extends Component {
       data: {}
     };
   }
+  componentWillMount() {
+    this.getPostDetail();
+  }
 
   getPostDetail = () => {
+    let { slug } = this.props.navigation.state.params.value;
     apiPosts
       .getPost(slug)
       .then(r => {
-        console.log(r);
+        console.log('r', r.post.data);
         this.setState({ data: r.post.data });
       })
       .catch(err => {
@@ -42,9 +47,9 @@ export default class PostDetails extends Component {
   };
 
   render() {
+    console.log('data', this.state.data);
     const { user } = this.props.navigation.state.params.value;
     const { avatar, name, username } = user.data;
-    console.log(user);
     return (
       <Fragment>
         <StatusBar backgroundColor="#5387c6" barStyle="light-content" />

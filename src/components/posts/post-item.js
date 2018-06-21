@@ -45,7 +45,6 @@ const icons = [
 export default class PostItem extends Component {
   render() {
     const isSeries = this.props.isSeries;
-    console.log('isSeries', isSeries);
     const value = this.props.value;
     const { title, contents_short, user, contents } = value;
     const { avatar, name, username } = user.data;

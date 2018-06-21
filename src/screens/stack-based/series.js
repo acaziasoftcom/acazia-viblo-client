@@ -41,7 +41,7 @@ export default class Series extends Component {
               }}
             />
           }
-          title="Series"
+          title={'Series'}
           styleTitle={{ color: '#fff' }}
         />
         <ScrollView>

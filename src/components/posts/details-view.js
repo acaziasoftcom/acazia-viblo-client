@@ -8,7 +8,6 @@ import {
   StyleSheet
 } from 'react-native';
 import { apiPosts } from '../../common/api/api-posts';
-import Url from 'url';
 const { width } = Dimensions.get('window');
 export default class DetailsView extends Component {
   constructor(props) {
@@ -22,7 +21,6 @@ export default class DetailsView extends Component {
       .getPost(slug)
       .then(r => {
         console.log(r);
-        console.log(Url.parse(r.post.data.canonical_url));
         this.setState({ data: r.post.data });
       })
       .catch(err => {

@@ -16,7 +16,6 @@ import {
 } from 'react-navigation-redux-helpers';
 import { rootReducer } from '../reducers/root-reducer';
 
-
 // redux-persist v5 configuration:
 // Persistor configuration, default is AsyncStorage;
 const persistConfig = {

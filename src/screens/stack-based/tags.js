@@ -22,7 +22,7 @@ const ShowQuestions = ({ data, navigation }) => {
     </ScrollView>
   );
 };
-export default class Questions extends Component {
+export default class Tags extends Component {
   static navigationOptions = ({ navigation }) => {
     const { goBack } = navigation;
     return {
@@ -42,17 +42,7 @@ export default class Questions extends Component {
           onPress={() => {
             DeviceEventEmitter.emit('DRAWER_TOGGLE', true);
           }}
-          title={'Questions'}
-        />
-      ),
-      headerRight: (
-        <ButtonIcon
-          onPress={() => {
-            navigation.push('SearchScreen');
-          }}
-          extraElement={
-            <Icon name="magnify" type="material-community" color="#fff" />
-          }
+          title={'Tags'}
         />
       )
     };

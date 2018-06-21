@@ -23,6 +23,11 @@ const ItemOption = ({ name, icon, onPress }) => {
 };
 
 class CustomDrawer extends Component {
+  showScreen(screen) {
+    const { dispatch } = this.props;
+    dispatch(navigate(screen));
+    DeviceEventEmitter.emit('DRAWER_TOGGLE');
+  }
   menuOptions = () => {
     const { dispatch } = this.props;
     let options = [
@@ -31,8 +36,7 @@ class CustomDrawer extends Component {
         name: 'Posts',
         icon: 'book-open',
         onPress: () => {
-          dispatch(navigate('SearchScreen'));
-          DeviceEventEmitter.emit('DRAWER_TOGGLE');
+          this.showScreen('PostScreen');
         }
       },
       {
@@ -40,7 +44,8 @@ class CustomDrawer extends Component {
         name: 'Series',
         icon: 'buffer',
         onPress: () => {
-          alert('vao 2');
+          this.showScreen('SeriesScreen');
+          //SeriesScreen
         }
       },
       {
@@ -48,7 +53,8 @@ class CustomDrawer extends Component {
         name: 'Question',
         icon: 'help-circle',
         onPress: () => {
-          alert('vao 3');
+          this.showScreen('QuestionsScreen');
+          //QuestionsScreen
         }
       },
       {
@@ -56,7 +62,7 @@ class CustomDrawer extends Component {
         name: 'Tags',
         icon: 'tag-multiple',
         onPress: () => {
-          alert('vao 4');
+          this.showScreen('TagsScreen');
         }
       },
       {

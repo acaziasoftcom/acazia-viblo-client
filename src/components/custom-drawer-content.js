@@ -6,10 +6,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  Image
+  Image,
+  DeviceEventEmitter
 } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
 const { width } = Dimensions.get('window');
+import { navigate } from '../actions/actions-navigaion';
 const ItemOption = ({ name, icon, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.containerItem}>
@@ -20,14 +23,20 @@ const ItemOption = ({ name, icon, onPress }) => {
 };
 
 class CustomDrawer extends Component {
+  showScreen(screen) {
+    const { dispatch } = this.props;
+    dispatch(navigate(screen));
+    DeviceEventEmitter.emit('DRAWER_TOGGLE');
+  }
   menuOptions = () => {
+    const { dispatch } = this.props;
     let options = [
       {
         id: 1,
         name: 'Posts',
         icon: 'book-open',
         onPress: () => {
-          alert('vao 1');
+          this.showScreen('PostScreen');
         }
       },
       {
@@ -35,7 +44,8 @@ class CustomDrawer extends Component {
         name: 'Series',
         icon: 'buffer',
         onPress: () => {
-          alert('vao 2');
+          this.showScreen('SeriesScreen');
+          //SeriesScreen
         }
       },
       {
@@ -43,7 +53,8 @@ class CustomDrawer extends Component {
         name: 'Question',
         icon: 'help-circle',
         onPress: () => {
-          alert('vao 3');
+          this.showScreen('QuestionsScreen');
+          //QuestionsScreen
         }
       },
       {
@@ -51,7 +62,7 @@ class CustomDrawer extends Component {
         name: 'Tags',
         icon: 'tag-multiple',
         onPress: () => {
-          alert('vao 4');
+          this.showScreen('TagsScreen');
         }
       },
       {
@@ -81,6 +92,11 @@ class CustomDrawer extends Component {
     ];
     return options;
   };
+
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
   render() {
     return (
       <View style={{ marginTop: 20, justifyContent: 'center', flex: 1 }}>
@@ -140,4 +156,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export { CustomDrawer };
+const mapStateToProps = state => state;
+const mapDispatchToProps = dispatch => ({ dispatch });
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CustomDrawer);

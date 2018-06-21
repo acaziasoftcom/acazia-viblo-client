@@ -1,10 +1,28 @@
 import React, { Component, Fragment } from 'react';
-import { StyleSheet, StatusBar, DeviceEventEmitter } from 'react-native';
+import { ScrollView, DeviceEventEmitter, StyleSheet } from 'react-native';
+import QuesionItem from '../../components/questions/question-item';
+import { apiQuestions } from '../../common/api/api-questions';
 import { ButtonIcon } from '../../components/common/button-icon';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Icon } from 'react-native-elements';
-import PostsView from '../../components/posts/post-view';
-export default class Post extends Component {
+
+const ShowQuestions = ({ data, navigation }) => {
+  return (
+    <ScrollView>
+      {data.map(value => {
+        console.log('item', value);
+        return (
+          <QuesionItem
+            key={Math.random()}
+            value={value}
+            navigation={navigation}
+          />
+        );
+      })}
+    </ScrollView>
+  );
+};
+export default class Tags extends Component {
   static navigationOptions = ({ navigation }) => {
     const { goBack } = navigation;
     return {
@@ -24,30 +42,31 @@ export default class Post extends Component {
           onPress={() => {
             DeviceEventEmitter.emit('DRAWER_TOGGLE', true);
           }}
-          title={'Home'}
-        />
-      ),
-      headerRight: (
-        <ButtonIcon
-          onPress={() => {
-            navigation.push('SearchScreen');
-          }}
-          extraElement={
-            <Icon name="magnify" type="material-community" color="#fff" />
-          }
+          title={'Tags'}
         />
       )
     };
   };
   constructor(props) {
     super(props);
+    this.state = {
+      data: []
+    };
   }
 
+  componentWillMount = () => {
+    apiQuestions
+      .getQuestionsFeed('newest', { page: 1, limit: 20 })
+      .then(r => {
+        console.log(r);
+        this.setState({ data: r.data });
+      })
+      .catch(err => console.log(err));
+  };
+
   render() {
-    console.log(this.props);
     return (
       <Fragment>
-        <StatusBar backgroundColor="#5387c6" barStyle="light-content" />
         <ScrollableTabView
           initialPage={0}
           // onChangeTab={({ i }) => this.onChangeTab(i)}
@@ -59,16 +78,15 @@ export default class Post extends Component {
             this.tabView = tabView;
           }}
         >
-          <PostsView {...this.props} chooseData={'newest'} tabLabel="Newest" />
-          <PostsView
-            {...this.props}
-            chooseData={'editors-choice'}
-            tabLabel="Editors choice"
+          <ShowQuestions
+            navigation={this.props.navigation}
+            data={this.state.data}
+            tabLabel="Newest"
           />
-          <PostsView
-            {...this.props}
-            chooseData={'trending'}
-            tabLabel="Trending"
+          <ShowQuestions
+            navigation={this.props.navigation}
+            data={this.state.data}
+            tabLabel="Unsolved"
           />
         </ScrollableTabView>
       </Fragment>

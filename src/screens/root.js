@@ -3,14 +3,14 @@ import {
   DrawerLayoutAndroid,
   Platform,
   DeviceEventEmitter,
-  Dimensions,
-  StyleSheet,
-  StatusBar
+  Dimensions
 } from 'react-native';
+import { connect } from 'react-redux';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
-import AppNavigator from '../navigations/app-navigator';
-import { CustomDrawer } from '../components/custom-drawer-content';
-
+import { AppNavigator } from '../navigations/app-navigator';
+import CustomDrawer from '../components/custom-drawer-content';
+import { addNavigationHelpers } from 'react-navigation';
+import { addListener } from '../stores/customer-store';
 class Root extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +27,8 @@ class Root extends Component {
   }
 
   render() {
+    console.log(this.props);
+    const { navState, dispatch } = this.props;
     return (
       <Fragment>
         <DrawerLayout
@@ -47,12 +49,24 @@ class Root extends Component {
           //drawerLockMode={this.getDrawerLockMode()}
           useNativeAnimations
         >
-          <StatusBar backgroundColor="#E4E4F0" barStyle={'dark-content'} />
-          <AppNavigator />
+          <AppNavigator
+            navigation={addNavigationHelpers({
+              dispatch,
+              state: navState,
+              addListener
+            })}
+          />
         </DrawerLayout>
       </Fragment>
     );
   }
 }
 
-export default Root;
+const mapStateToProps = state => {
+  const { navState } = state;
+  return {
+    navState
+  };
+};
+
+export default connect(mapStateToProps)(Root);

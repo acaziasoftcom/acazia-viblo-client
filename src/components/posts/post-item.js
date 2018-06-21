@@ -43,9 +43,6 @@ const icons = [
   }
 ];
 export default class PostItem extends Component {
-  handleContentsShort(value) {
-    return value.split('↵↵↵↵');
-  }
   render() {
     const isSeries = this.props.isSeries;
     console.log('isSeries', isSeries);
@@ -109,14 +106,6 @@ export default class PostItem extends Component {
               );
           })}
         </View>
-        {/* {this.handleContentsShort(contents_short).length == 3 ? (
-          <Image
-            style={{ width: 300, height: 45, borderRadius: 23 }}
-            source={{
-              uri: this.handleContentsShort(contents_short)[1]
-            }}
-          />
-        ) : null} */}
         <Text
           style={{ fontSize: 15, color: '#000' }}
           numberOfLines={4}
@@ -133,6 +122,14 @@ const styles = StyleSheet.create({
   conainerHeader: {
     flexDirection: 'row'
   },
-  title: { fontSize: 18, color: '#000', marginBottom: 12, marginTop: 5 },
-  containerIcon: { flexDirection: 'row', marginBottom: 17 }
+  title: {
+    fontSize: 18,
+    color: '#000',
+    marginBottom: 12,
+    marginTop: 5
+  },
+  containerIcon: {
+    flexDirection: 'row',
+    marginBottom: 17
+  }
 });

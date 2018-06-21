@@ -5,6 +5,9 @@ import PostDetails from '../screens/stack-based/post-details';
 import Series from '../screens/stack-based/series';
 import { Dimensions } from 'react-native';
 import SeriesDetail from '../screens/stack-based/series-detail';
+import Questions from '../screens/stack-based/questions';
+import QuestionDetials from '../screens/stack-based/question-details';
+import Tags from '../screens/stack-based/tags';
 const { width } = Dimensions.get('window');
 
 const routeConfig = {
@@ -12,7 +15,10 @@ const routeConfig = {
   SearchScreen: { screen: Search },
   PostDetailsScreen: { screen: PostDetails },
   SeriesScreen: { screen: Series },
-  SeriesDetailScreen: { screen: SeriesDetail }
+  SeriesDetailScreen: { screen: SeriesDetail },
+  QuestionsScreen: { screen: Questions },
+  QuestionDetialsScreen: { screen: QuestionDetials },
+  TagsScreen: { screen: Tags }
 };
 
 const stackNavigatorConfig = {
@@ -43,4 +49,5 @@ const stackNavigatorConfig = {
 };
 
 const AppNavigator = StackNavigator(routeConfig, stackNavigatorConfig);
-export default AppNavigator;
+
+export { AppNavigator };

@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { View, Text, WebView } from 'react-native';
+import React, { Component, Fragment } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 import { Header } from '../../components/header/header-layout';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import DetailsView from '../../components/posts/details-view';
+////import SeriesContent from '../../components/series-content';
 import { ButtonBack } from '../../components/header/button-back';
 import { Avatar } from '../../components/common/avatar';
 import { apiSeries } from '../../common/api/api-series';
 import { ButtonShare } from '../../components/header/button-share';
-
+//import Comment from '../../components/comment';
 export default class SeriesDetail extends Component {
   static navigationOptions = {
     header: null
@@ -15,47 +15,59 @@ export default class SeriesDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      postData: [],
+      seriesData: []
     };
     this.hashId = this.props.navigation.state.params.hashId;
     console.log(this.hashId);
   }
   componentWillMount() {
     this.getSeriesDetal();
+    this.getPost();
   }
   getSeriesDetal = () => {
     let hashId = this.props.navigation.state.params.hashId;
     apiSeries
       .getSeries(hashId)
       .then(result => {
-        // console.log('series', result);
+        // console.log('result', result);
         this.setState({
-          data: result.posts.data
+          postData: result.posts.data,
+          seriesData: result.series.data
         });
       })
       .catch(e => console.log(e));
   };
+  getCommentSerie = () => {};
+
+  getPost = () => {
+    let hashId = this.props.navigation.state.params.hashId;
+    apiSeries
+      .getPosts(hashId, { page: 1, limit: 10 })
+      .then(result => {
+        // console.log('post', result);
+      })
+      .catch(e => console.log('e', e));
+  };
   render() {
-    let user = this.state.data[0];
-    let urlImage,
-      name,
-      username,
-      urlPost = '';
-    console.log('user', user);
+    let { user } = this.state.seriesData;
+    let valueUser = null;
     if (user) {
-      let dataUser = user.user.data;
-      urlImage = dataUser.avatar[0];
-      name = dataUser.name;
-      username = dataUser.username;
-      urlPost = user.url;
+      let dataUser = user.data;
+      valueUser = {
+        id: dataUser.id,
+        avatar: dataUser.avatar[0],
+        name: dataUser.name,
+        username: dataUser.username
+      };
     }
     return (
-      <View>
+      <Fragment>
         <Header
           headerLeft={
             <ButtonBack onPress={() => this.props.navigation.goBack()} />
           }
-          title={<Avatar urlImage={urlImage} name={name} username={username} />}
+          title={<Avatar style={{ flex: 1 }} value={valueUser} />}
           headerRight={<ButtonShare />}
         />
         <ScrollableTabView
@@ -88,7 +100,7 @@ export default class SeriesDetail extends Component {
             <Text>aaaaaaaaaa</Text>
           </View>
         </ScrollableTabView>
-      </View>
+      </Fragment>
     );
   }
 }

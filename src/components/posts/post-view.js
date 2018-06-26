@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
 import PostItem from './post-item';
 import { apiPosts } from '../../common/api/api-posts';
+import ShowListData from '../common/show-list-data';
 export default class PostsView extends Component {
   constructor(props) {
     super(props);
@@ -18,18 +18,11 @@ export default class PostsView extends Component {
   }
   render() {
     return (
-      <ScrollView style={styles.containerList}>
-        {this.state.data.map(value => {
-          return <PostItem key={Math.random()} value={value} {...this.props} />;
-        })}
-      </ScrollView>
+      <ShowListData
+        {...this.props}
+        data={this.state.data}
+        component={<PostItem />}
+      />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  containerList: {
-    backgroundColor: '#F1F2EC',
-    marginTop: 3
-  }
-});

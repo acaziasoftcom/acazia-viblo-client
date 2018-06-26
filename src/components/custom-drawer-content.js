@@ -100,7 +100,12 @@ class CustomDrawer extends Component {
   render() {
     return (
       <View style={{ marginTop: 20, justifyContent: 'center', flex: 1 }}>
-        <View style={styles.avatarWrapper}>
+        <TouchableOpacity
+          style={styles.avatarWrapper}
+          onPress={() => {
+            this.showScreen('ProfilesScreen');
+          }}
+        >
           <Image
             style={styles.imageAvatar}
             source={{
@@ -109,7 +114,7 @@ class CustomDrawer extends Component {
             }}
           />
           <Text style={styles.textName}>Nguyễn Công Trương</Text>
-        </View>
+        </TouchableOpacity>
         <ScrollView
           contentContainerStyle={{ backgroundColor: '#F1F2EC', flex: 1 }}
         >

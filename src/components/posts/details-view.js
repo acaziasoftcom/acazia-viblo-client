@@ -8,6 +8,8 @@ import {
   StyleSheet
 } from 'react-native';
 const { width } = Dimensions.get('window');
+import Markdown from 'react-native-simple-markdown';
+
 export default class DetailsView extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +41,7 @@ export default class DetailsView extends Component {
             );
           })}
         </View>
-        <Text style={{ fontSize: 15 }}>{contents}</Text>
+        <Markdown>{contents}</Markdown>
       </ScrollView>
       // <WebView source={{ uri: url }} style={{ marginTop: 20 }} />
     );

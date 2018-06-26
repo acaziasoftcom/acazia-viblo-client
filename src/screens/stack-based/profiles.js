@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { StyleSheet, StatusBar, DeviceEventEmitter } from 'react-native';
 import { ButtonIcon } from '../../components/common/button-icon';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+import ScrollableTabView, {
+  ScrollableTabBar
+} from 'react-native-scrollable-tab-view';
 import { Icon } from 'react-native-elements';
-import PostItem from '../../components/posts/post-item';
-import SerieView from '../../components/series/serie-view';
-import { apiSeries } from '../../common/api/api-series';
-export default class Series extends Component {
+import ProfileService from '../../components/profiles/profiles';
+
+export default class Profiles extends Component {
   static navigationOptions = ({ navigation }) => {
     const { goBack } = navigation;
     return {
@@ -26,7 +27,7 @@ export default class Series extends Component {
           onPress={() => {
             DeviceEventEmitter.emit('DRAWER_TOGGLE', true);
           }}
-          title={'Home'}
+          title={'My Contents'}
         />
       ),
       headerRight: (
@@ -44,7 +45,9 @@ export default class Series extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
+    console.log(this.props);
     return (
       <Fragment>
         <StatusBar backgroundColor="#5387c6" barStyle="light-content" />
@@ -58,9 +61,21 @@ export default class Series extends Component {
           ref={tabView => {
             this.tabView = tabView;
           }}
+          renderTabBar={() => <ScrollableTabBar />}
         >
-          <SerieView isSeries {...this.props} tabLabel="Newest" />
-          <SerieView isSeries {...this.props} tabLabel="Clipped" />
+          <ProfileService {...this.props} service={1} tabLabel="My posts" />
+          <ProfileService {...this.props} service={2} tabLabel="My questions" />
+          <ProfileService {...this.props} service={3} tabLabel="My Series" />
+          <ProfileService
+            {...this.props}
+            service={4}
+            tabLabel="Following users"
+          />
+          <ProfileService
+            {...this.props}
+            service={5}
+            tabLabel="Following tags"
+          />
         </ScrollableTabView>
       </Fragment>
     );

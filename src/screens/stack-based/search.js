@@ -116,6 +116,7 @@ export default class Search extends Component {
           title={
             <TextInput
               style={styles.text_input}
+              autoCapitalize="characters"
               placeholder="Search Viblo..."
               placeholderTextColor="#fff"
               underlineColorAndroid="transparent"

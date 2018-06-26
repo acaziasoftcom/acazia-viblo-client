@@ -8,6 +8,8 @@ import SeriesDetail from '../screens/stack-based/series-detail';
 import Questions from '../screens/stack-based/questions';
 import QuestionDetials from '../screens/stack-based/question-details';
 import Tags from '../screens/stack-based/tags';
+import Profiles from '../screens/stack-based/profiles';
+import InfoUser from '../screens/stack-based/info-user';
 const { width } = Dimensions.get('window');
 
 const routeConfig = {
@@ -18,7 +20,9 @@ const routeConfig = {
   SeriesDetailScreen: { screen: SeriesDetail },
   QuestionsScreen: { screen: Questions },
   QuestionDetialsScreen: { screen: QuestionDetials },
-  TagsScreen: { screen: Tags }
+  TagsScreen: { screen: Tags },
+  ProfilesScreen: { screen: Profiles },
+  InfoUserScreen: { screen: InfoUser }
 };
 
 const stackNavigatorConfig = {

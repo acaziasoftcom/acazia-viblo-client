@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
+import Markdown from 'react-native-simple-markdown';
+
 const Item = ({ icon, count, style, type }) => {
   return (
     <View style={[{ flexDirection: 'row' }, style]}>
@@ -42,40 +44,49 @@ const icons = [
     type: 'font-awesome'
   }
 ];
+
 export default class PostItem extends Component {
+  linkView() {
+    if (this.props.isSeries) {
+      this.props.navigation.push('SeriesDetailScreen', {
+        hashId: this.props.value.hash_id
+      });
+    } else {
+      this.props.navigation.push('PostDetailsScreen', {
+        value: this.props.value
+      });
+    }
+  }
   render() {
     const isSeries = this.props.isSeries;
-    console.log('isSeries', isSeries);
-    const value = this.props.value;
-    const { title, contents_short, user, contents } = value;
+    const {
+      title,
+      contents_short,
+      user,
+      contents,
+      views_count,
+      clips_count,
+      comments_count,
+      points,
+      posts_count
+    } = this.props.value;
     const { avatar, name, username } = user.data;
-    let count = [
-      value.views_count,
-      value.clips_count,
-      value.comments_count,
-      value.points,
-      value.posts_count
-    ];
-    let onPress = this.props.onPress;
-    //console.log(this.handleContentsShort(contents_short));
+    let count = [views_count, clips_count, comments_count, points, posts_count];
     return (
       <TouchableOpacity
-        style={{
-          backgroundColor: '#fff',
-          marginBottom: 5,
-          paddingHorizontal: 10,
-          paddingVertical: 4
-        }}
+        style={[
+          {
+            backgroundColor: '#fff',
+            marginBottom: 5,
+            paddingHorizontal: 10,
+            paddingVertical: 4
+          },
+          this.props.style
+        ]}
         key={Math.random()}
-        onPress={
-          isSeries
-            ? onPress
-            : () => {
-                this.props.navigation.push('PostDetailsScreen', {
-                  value: this.props.value
-                });
-              }
-        }
+        onPress={() => {
+          this.linkView();
+        }}
       >
         <View style={styles.conainerHeader}>
           <Image
@@ -106,13 +117,7 @@ export default class PostItem extends Component {
               );
           })}
         </View>
-        <Text
-          style={{ fontSize: 15, color: '#000' }}
-          numberOfLines={4}
-          ellipsizeMode="tail"
-        >
-          {isSeries ? contents : contents_short + '...'}
-        </Text>
+        <Markdown>{isSeries ? contents + '...' : contents_short}</Markdown>
       </TouchableOpacity>
     );
   }

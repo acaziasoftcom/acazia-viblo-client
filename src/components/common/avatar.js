@@ -1,27 +1,33 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const Avatar = ({
-  urlImage,
-  name,
-  username,
-  moreInfo,
+  value,
   style,
   styleImage,
   styleName,
-  styleUserName
+  styleUserName,
+  ...props
 }) => {
+  console.log('value: ', props);
   return (
-    <View style={[styles.container, style]}>
-      <Image style={[styles.image, styleImage]} source={{ uri: urlImage }} />
+    <TouchableOpacity
+      style={[styles.container, style]}
+      onPress={() => {
+        props.navigation.push('InfoUserScreen', { value: value });
+      }}
+    >
+      <Image
+        style={[styles.image, styleImage]}
+        source={{ uri: value.avatar }}
+      />
       <View style={styles.info_person}>
-        <Text style={[styles.name, styleName]}>{name}</Text>
+        <Text style={[styles.name, styleName]}>{value.name}</Text>
         <Text style={[styles.username, styleUserName]}>
-          {'@' + username}
-          {moreInfo ? ' - ' + moreInfo : null}
+          {'@' + value.username}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
@@ -34,7 +40,7 @@ const styles = StyleSheet.create({
     borderRadius: 20
   },
   info_person: {
-    marginLeft: 5
+    marginLeft: 7
   },
   name: {
     fontSize: 13,

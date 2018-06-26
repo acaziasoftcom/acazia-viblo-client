@@ -1,4 +1,9 @@
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
+import {
+  reduxifyNavigator,
+  createReactNavigationReduxMiddleware
+} from 'react-navigation-redux-helpers';
+import { connect } from 'react-redux';
 import Post from '../screens/stack-based/posts';
 import Search from '../screens/stack-based/search';
 import PostDetails from '../screens/stack-based/post-details';
@@ -52,6 +57,15 @@ const stackNavigatorConfig = {
   }
 };
 
-const AppNavigator = StackNavigator(routeConfig, stackNavigatorConfig);
+const AppNavigator = createStackNavigator(routeConfig, stackNavigatorConfig);
+const middleware = createReactNavigationReduxMiddleware(
+  'root',
+  state => state.navState
+);
+const App = reduxifyNavigator(AppNavigator, 'root');
+const mapStateToProps = state => ({
+  state: state.navState
+});
+const AppWithNavigationState = connect(mapStateToProps)(App);
 
-export { AppNavigator };
+export { AppNavigator, AppWithNavigationState, middleware };

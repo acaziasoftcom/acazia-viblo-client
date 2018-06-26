@@ -7,10 +7,8 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import DrawerLayout from 'react-native-drawer-layout-polyfill';
-import { AppNavigator } from '../navigations/app-navigator';
+import { AppWithNavigationState } from '../navigations/app-navigator';
 import CustomDrawer from '../components/custom-drawer-content';
-import { addNavigationHelpers } from 'react-navigation';
-import { addListener } from '../stores/customer-store';
 class Root extends Component {
   constructor(props) {
     super(props);
@@ -27,8 +25,6 @@ class Root extends Component {
   }
 
   render() {
-    console.log(this.props);
-    const { navState, dispatch } = this.props;
     return (
       <Fragment>
         <DrawerLayout
@@ -49,13 +45,7 @@ class Root extends Component {
           //drawerLockMode={this.getDrawerLockMode()}
           useNativeAnimations
         >
-          <AppNavigator
-            navigation={addNavigationHelpers({
-              dispatch,
-              state: navState,
-              addListener
-            })}
-          />
+          <AppWithNavigationState />
         </DrawerLayout>
       </Fragment>
     );

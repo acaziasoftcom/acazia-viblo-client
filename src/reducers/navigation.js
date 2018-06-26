@@ -18,7 +18,6 @@ export const navState = (state, action) => {
           return state;
         }
       }
-      console.log('? : ', AppNavigator.router.getStateForAction(action, state));
       return AppNavigator.router.getStateForAction(action, state);
   }
 };

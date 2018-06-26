@@ -10,10 +10,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistCombineReducers } from 'redux-persist';
 import storage from 'redux-persist/es/storage';
-import {
-  createReactNavigationReduxMiddleware,
-  createReduxBoundAddListener
-} from 'react-navigation-redux-helpers';
+import { middleware } from '../navigations/app-navigator';
 import { rootReducer } from '../reducers/root-reducer';
 
 // redux-persist v5 configuration:
@@ -28,20 +25,20 @@ const persistConfig = {
 // Reducer, persisted.
 const reducers = persistCombineReducers(persistConfig, rootReducer);
 
-const navigationMiddleware = createReactNavigationReduxMiddleware(
-  'flash',
-  state => {
-    return state.navState;
-  }
-);
+// const navigationMiddleware = createReactNavigationReduxMiddleware(
+//   'flash',
+//   state => {
+//     return state.navState;
+//   }
+// );
 
-export const addListener = createReduxBoundAddListener('flash');
+//export const addListener = createReduxBoundAddListener('flash');
 
 export function configureStore(initialState) {
   const store = createStore(
     reducers,
     initialState,
-    compose(applyMiddleware(navigationMiddleware))
+    compose(applyMiddleware(middleware))
   );
   return { store };
 }

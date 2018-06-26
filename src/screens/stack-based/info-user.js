@@ -30,25 +30,15 @@ export default class InfoUser extends Component {
       user: null,
       posts: []
     };
+    this.getUser();
+  }
+
+  async getUser() {
     const { username } = this.props.navigation.state.params.value;
-    apiUsers
-      .associatedResource(username, 'posts')
-      .then(r => {
-        console.log(r);
-        this.setState({ posts: r.data });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    apiUsers
-      .getProfile(username)
-      .then(r => {
-        console.log(r);
-        this.setState({ user: r.data });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    let dta = await apiUsers.getProfile(username);
+    this.setState({ user: dta.data });
+    let data = await apiUsers.associatedResource(username, 'posts');
+    this.setState({ posts: data.data });
   }
 
   getIcon(value) {
@@ -75,7 +65,6 @@ export default class InfoUser extends Component {
   render() {
     const { name } = this.props.navigation.state.params.value;
     const { user } = this.state;
-    console.log(user);
     return (
       <Fragment>
         <StatusBar backgroundColor="#5387c6" barStyle="light-content" />

@@ -9,7 +9,6 @@ const Avatar = ({
   styleUserName,
   ...props
 }) => {
-  console.log('value: ', props);
   return (
     <TouchableOpacity
       style={[styles.container, style]}

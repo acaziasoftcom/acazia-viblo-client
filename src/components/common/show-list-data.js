@@ -6,7 +6,6 @@ export default class ShowListData extends Component {
   }
   render() {
     const { data, component } = this.props;
-    console.log(data);
     return (
       <ScrollView style={styles.containerList}>
         {data.map(value => {

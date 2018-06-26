@@ -41,7 +41,11 @@ export default class DetailsView extends Component {
             );
           })}
         </View>
-        <Markdown>{contents}</Markdown>
+        <Markdown
+          errorHandler={(errors, children) => console.log(errors, children)}
+        >
+          {contents}
+        </Markdown>
       </ScrollView>
       // <WebView source={{ uri: url }} style={{ marginTop: 20 }} />
     );

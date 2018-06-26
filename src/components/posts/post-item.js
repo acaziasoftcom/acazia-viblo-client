@@ -117,7 +117,11 @@ export default class PostItem extends Component {
               );
           })}
         </View>
-        <Markdown>{isSeries ? contents + '...' : contents_short}</Markdown>
+        <Markdown
+          errorHandler={(errors, children) => console.log(errors, children)}
+        >
+          {isSeries ? contents + '...' : contents_short}
+        </Markdown>
       </TouchableOpacity>
     );
   }

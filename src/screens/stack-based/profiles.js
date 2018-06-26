@@ -47,7 +47,6 @@ export default class Profiles extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <Fragment>
         <StatusBar backgroundColor="#5387c6" barStyle="light-content" />

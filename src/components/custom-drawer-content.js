@@ -13,11 +13,11 @@ import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 const { width } = Dimensions.get('window');
 import { navigate } from '../actions/actions-navigaion';
-const ItemOption = ({ name, icon, onPress }) => {
+const ItemOption = ({ name, icon, onPress, type, size }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.containerItem}>
-      <Icon name={icon} type="material-community" color="#5E5EF4" size={24} />
-      <Text style={{ marginLeft: 15, fontSize: 16 }}>{name}</Text>
+      <Icon name={icon} type={type} color="#5387c6" size={size ? size : 24} />
+      <Text style={{ marginLeft: 17, fontSize: 17 }}>{name}</Text>
     </TouchableOpacity>
   );
 };
@@ -29,12 +29,12 @@ class CustomDrawer extends Component {
     DeviceEventEmitter.emit('DRAWER_TOGGLE');
   }
   menuOptions = () => {
-    const { dispatch } = this.props;
     let options = [
       {
         id: 1,
         name: 'Posts',
-        icon: 'book-open',
+        type: 'font-awesome',
+        icon: 'paste',
         onPress: () => {
           this.showScreen('PostScreen');
         }
@@ -42,7 +42,9 @@ class CustomDrawer extends Component {
       {
         id: 2,
         name: 'Series',
+        type: 'material-community',
         icon: 'buffer',
+        size: 27,
         onPress: () => {
           this.showScreen('SeriesScreen');
           //SeriesScreen
@@ -51,7 +53,9 @@ class CustomDrawer extends Component {
       {
         id: 3,
         name: 'Question',
+        type: 'material-community',
         icon: 'help-circle',
+        size: 27,
         onPress: () => {
           this.showScreen('QuestionsScreen');
           //QuestionsScreen
@@ -60,7 +64,9 @@ class CustomDrawer extends Component {
       {
         id: 4,
         name: 'Tags',
+        type: 'material-community',
         icon: 'tag-multiple',
+        size: 27,
         onPress: () => {
           this.showScreen('TagsScreen');
         }
@@ -68,7 +74,9 @@ class CustomDrawer extends Component {
       {
         id: 5,
         name: 'Announcements',
+        type: 'material-community',
         icon: 'bell-sleep',
+        size: 27,
         onPress: () => {
           alert('vao 5');
         }
@@ -76,7 +84,9 @@ class CustomDrawer extends Component {
       {
         id: 6,
         name: 'Login',
+        type: 'material-community',
         icon: 'login',
+        size: 27,
         onPress: () => {
           alert('vao 6');
         }
@@ -84,7 +94,9 @@ class CustomDrawer extends Component {
       {
         id: 7,
         name: 'Register',
+        type: 'material-community',
         icon: 'login',
+        size: 27,
         onPress: () => {
           alert('vao 7');
         }
@@ -95,7 +107,6 @@ class CustomDrawer extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
   }
   render() {
     return (
@@ -124,6 +135,8 @@ class CustomDrawer extends Component {
                 key={Math.random()}
                 name={value.name}
                 icon={value.icon}
+                type={value.type}
+                size={value.size}
                 onPress={value.onPress}
               />
             );

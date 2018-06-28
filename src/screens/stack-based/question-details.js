@@ -1,13 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import {
-  StyleSheet,
-  StatusBar,
-  Platform,
-  Dimensions,
-  View,
-  Text,
-  Image
-} from 'react-native';
+import { StatusBar, Platform, Dimensions } from 'react-native';
 import { ButtonIcon } from '../../components/common/button-icon';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Header } from '../../components/header/header-layout';
@@ -15,6 +7,11 @@ import { ButtonBack } from '../../components/header/button-back';
 import DetailsView from '../../components/posts/details-view';
 import { Icon } from 'react-native-elements';
 const { width } = Dimensions.get('window');
+import { Avatar } from '../../components/common/avatar';
+import { apiQuestions } from '../../common/api/api-questions';
+import Loading from '../../components/common/loading';
+import CommentScreen from '../../components/comments/comment-screen';
+import AnswerScreen from '../../components/questions/answer-screen';
 export default class QuestionDetials extends Component {
   static navigationOptions = () => {
     return {
@@ -24,30 +21,40 @@ export default class QuestionDetials extends Component {
   };
   constructor(props) {
     super(props);
+    const { hash_id } = this.props.navigation.state.params.value;
+    this.state = {
+      question: null,
+      answers: []
+    };
+    apiQuestions
+      .getQuestion(hash_id)
+      .then(r => {
+        console.log(r);
+        this.setState({ question: r.question.data, answers: r.answers.data });
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
     const { user } = this.props.navigation.state.params.value;
-    const { avatar, name, username } = user.data;
-    console.log(user);
+    const { avatar, name, username, id } = user.data;
+    const { question, answers } = this.state;
+    if (!question) {
+      return <Loading />;
+    }
+    let valueUser = {
+      id: id,
+      avatar: avatar[0],
+      name: name,
+      username: username
+    };
     return (
       <Fragment>
         <StatusBar backgroundColor="#5387c6" barStyle="light-content" />
         <Header
           noMarginTop={Platform.OS === 'android'}
           title={
-            <View style={styles.avatarHeader}>
-              <Image
-                style={styles.imageAvatar}
-                source={{
-                  uri: avatar[0]
-                }}
-              />
-              <View style={{ flex: 1, marginLeft: 5 }}>
-                <Text style={{ fontSize: 13, color: '#fff' }}>{name}</Text>
-                <Text style={{ fontSize: 12, color: '#fff' }}>{username}</Text>
-              </View>
-            </View>
+            <Avatar {...this.props} style={{ flex: 1 }} value={valueUser} />
           }
           style={{ width: width, marginTop: Platform.OS === 'ios' ? 20 : 0 }}
           headerLeft={
@@ -73,8 +80,9 @@ export default class QuestionDetials extends Component {
           }
         />
         <ScrollableTabView
+          style={{ backgroundColor: '#fff' }}
           initialPage={0}
-          // onChangeTab={({ i }) => this.onChangeTab(i)}
+          // onChangeTab={({ i Ư}) => this.onChangeTab(i)}
           prerenderingSiblingsNumber={0}
           tabBarTextStyle={{ color: '#fff' }}
           tabBarBackgroundColor={'#5387c6'}
@@ -83,23 +91,21 @@ export default class QuestionDetials extends Component {
             this.tabView = tabView;
           }}
         >
-          <DetailsView {...this.props} tabLabel="Post" />
-          <DetailsView {...this.props} tabLabel="Comments" />
+          <DetailsView
+            data={question}
+            {...this.props}
+            tabLabel="Questions"
+            noPost
+          />
+          <CommentScreen
+            value={valueUser}
+            {...this.props}
+            tabLabel="Comments"
+            comments={question.comments.data}
+          />
+          <AnswerScreen {...this.props} tabLabel="Answers" data={answers} />
         </ScrollableTabView>
       </Fragment>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  imageAvatar: {
-    width: 35,
-    height: 35,
-    borderRadius: 18
-  },
-  avatarHeader: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center'
-  }
-});

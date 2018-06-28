@@ -10,14 +10,12 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import { apiQuestions } from '../../common/api/api-questions';
 import { ButtonIcon } from '../../components/common/button-icon';
 import { Icon } from 'react-native-elements';
 import { apiTags } from '../../common/api/api-tags';
 const { width } = Dimensions.get('window').width;
 export default class Tags extends Component {
-  static navigationOptions = ({ navigation }) => {
-    const { goBack } = navigation;
+  static navigationOptions = () => {
     return {
       headerStyle: styles.styleHeader,
       headerTintColor: '#5387c6',
@@ -53,6 +51,12 @@ export default class Tags extends Component {
       .then(r => {
         console.log(r);
         this.setState({ data: r.data });
+        apiTags
+          .associatedResource('posts', 'javascript')
+          .then(rr => {
+            console.log(rr);
+          })
+          .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
   };
@@ -66,7 +70,7 @@ export default class Tags extends Component {
           marginRight: 10,
           marginTop: 10,
           alignItems: 'center',
-          justifyContent:'center',
+          justifyContent: 'center',
           width: 85
         }}
       >

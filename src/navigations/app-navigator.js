@@ -15,6 +15,7 @@ import QuestionDetials from '../screens/stack-based/question-details';
 import Tags from '../screens/stack-based/tags';
 import Profiles from '../screens/stack-based/profiles';
 import InfoUser from '../screens/stack-based/info-user';
+import TagInfo from '../screens/stack-based/tag-info';
 const { width } = Dimensions.get('window');
 
 const routeConfig = {
@@ -27,7 +28,8 @@ const routeConfig = {
   QuestionDetialsScreen: { screen: QuestionDetials },
   TagsScreen: { screen: Tags },
   ProfilesScreen: { screen: Profiles },
-  InfoUserScreen: { screen: InfoUser }
+  InfoUserScreen: { screen: InfoUser },
+  TagInfoScreen: { screen: TagInfo }
 };
 
 const stackNavigatorConfig = {

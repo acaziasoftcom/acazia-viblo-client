@@ -66,7 +66,7 @@ export default class InfoUser extends Component {
     const { name } = this.props.navigation.state.params.value;
     const { user } = this.state;
     return (
-      <Fragment>
+      <View style={{flex: 1, backgroundColor: '#fff'}}>
         <StatusBar backgroundColor="#5387c6" barStyle="light-content" />
         <Header
           noMarginTop={Platform.OS === 'android'}
@@ -118,18 +118,22 @@ export default class InfoUser extends Component {
                 </View>
               </View>
             </View>
-            {this.state.posts.map(value => {
-              return (
-                <PostItem
-                  style={{ marginTop: 10 }}
-                  {...this.props}
-                  value={value}
-                />
-              );
+            {this.state.posts.map((value, index) => {
+              if (index !== this.state.posts.length - 1) {
+                return <PostItem {...this.props} value={value} />;
+              } else {
+                return (
+                  <PostItem
+                    {...this.props}
+                    value={value}
+                    style={{ borderBottomWidth: 0 }}
+                  />
+                );
+              }
             })}
           </ScrollView>
         ) : null}
-      </Fragment>
+      </View>
     );
   }
 }
@@ -143,7 +147,9 @@ const styles = StyleSheet.create({
   containerHeader: {
     backgroundColor: '#fff',
     alignItems: 'center',
-    paddingTop: 10
+    paddingTop: 10,
+    borderBottomWidth: 5,
+    borderColor: '#C2C2CA'
   },
   image: {
     height: 100,

@@ -79,7 +79,9 @@ export default class PostItem extends Component {
             backgroundColor: '#fff',
             marginBottom: 5,
             paddingHorizontal: 10,
-            paddingVertical: 4
+            paddingVertical: 4,
+            borderColor: '#C2C2CA',
+            borderBottomWidth: 3
           },
           this.props.style
         ]}
@@ -97,7 +99,7 @@ export default class PostItem extends Component {
           />
           <View style={{ marginLeft: 10 }}>
             <Text style={{ fontSize: 14, color: '#000' }}>{name}</Text>
-            <Text style={{ fontSize: 13 }}>{username}</Text>
+            <Text style={{ fontSize: 13 }}>@ {username}</Text>
           </View>
         </View>
         <Text style={styles.title}>{title}</Text>

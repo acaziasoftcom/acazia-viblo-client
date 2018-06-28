@@ -44,13 +44,11 @@ export default class Post extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <Fragment>
         <StatusBar backgroundColor="#5387c6" barStyle="light-content" />
         <ScrollableTabView
           initialPage={0}
-          // onChangeTab={({ i }) => this.onChangeTab(i)}
           prerenderingSiblingsNumber={0}
           tabBarTextStyle={{ color: '#fff' }}
           tabBarBackgroundColor={'#5387c6'}

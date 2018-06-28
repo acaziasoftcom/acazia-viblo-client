@@ -1,36 +1,61 @@
 import React, { Component } from 'react';
 import {
-  View,
   Text,
   ScrollView,
   Dimensions,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  View
 } from 'react-native';
+import { apiPosts } from '../../common/api/api-posts';
+import Loading from '../common/loading';
 const { width } = Dimensions.get('window');
 import Markdown from 'react-native-simple-markdown';
 
 export default class DetailsView extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      data: this.props.data
+    };
+    console.log(this.props.data);
+    if (!this.props.noPost) {
+      this.getPostDetail();
+    }
   }
+
+  getPostDetail = () => {
+    console.log('data', this.state.data);
+    apiPosts
+      .getPost(this.props.slug)
+      .then(r => {
+        console.log('r', r.post.data);
+        this.setState({ data: r.post.data });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
   render() {
-    if (this.props.data) {
-      var { contents, tags, title } = this.props.data;
+    const { data } = this.state;
+    if (data == undefined || data == null) {
+      return <Loading />;
     }
-    // console.log('da', tags);
-    console.log('tag', tags);
-    let tagsData = [];
-    if (tags) {
-      tagsData = tags.data;
-    }
-    // canonical_url  is webview in result api
-    // let url = this.props.postUrl;
+    console.log(data);
+    let { contents, tags, title } = data;
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={{ fontSize: 20, fontWeight: '500' }}>{title}</Text>
-        <View style={styles.title}>
-          {tagsData.map(value => {
+        <View
+          style={{
+            marginBottom: 10,
+            marginTop: 10,
+            width: '100%',
+            flexWrap: 'wrap',
+            flexDirection: 'row'
+          }}
+        >
+          {tags.data.map(value => {
             return (
               <TouchableOpacity
                 key={Math.random()}
@@ -42,6 +67,7 @@ export default class DetailsView extends Component {
           })}
         </View>
         <Markdown
+          style={{ paddingLeft: 5, paddingRight: 5 }}
           errorHandler={(errors, children) => console.log(errors, children)}
         >
           {contents}
@@ -54,21 +80,14 @@ export default class DetailsView extends Component {
 
 const styles = StyleSheet.create({
   container: {
+   // flex: 1,
     width: width,
-    justifyContent: 'center',
-    alignItems: 'center',
+    //alignItems: 'center',
     paddingTop: 30,
     paddingLeft: 10,
     paddingBottom: 20,
     paddingRight: 5,
     backgroundColor: '#fff'
-  },
-  title: {
-    flexDirection: 'row',
-    width: width,
-    paddingLeft: 10,
-    marginBottom: 15,
-    marginTop: 15
   },
   containerIcon: {
     borderColor: '#686975',
@@ -77,7 +96,8 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    minWidth: 50
+    minWidth: 50,
+    marginBottom: 5
   },
   textNameIcon: {
     paddingLeft: 5,

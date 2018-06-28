@@ -9,7 +9,7 @@ export default class SerieView extends Component {
       data: []
     };
     apiSeries
-      .getSeriesFeed({ page: 1, limit: 20 })
+      .getSeriesFeed({ page: 1, limit: 10 })
       .then(result => {
         console.log('result', result);
         this.setState({

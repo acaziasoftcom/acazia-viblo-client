@@ -35,7 +35,7 @@ export default class ProfileService extends Component {
       data = followingData;
       return;
     } else if (service === 5) {
-      data = await apiPosts.get('newest', 1);
+      data = followingData;
     }
     this.setState({ data: data.data });
   }

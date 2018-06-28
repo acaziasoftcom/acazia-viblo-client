@@ -6,7 +6,7 @@ export default class QuesionItem extends Component {
     const { answers_count, comments_count, title, tags } = this.props.value;
     return (
       <TouchableOpacity
-        style={styles.container}
+        style={[styles.container, this.props.style]}
         onPress={() => {
           this.props.navigation.push('QuestionDetialsScreen', {
             value: this.props.value
@@ -57,7 +57,9 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 75,
     backgroundColor: '#fff',
-    marginBottom: 3
+    marginBottom: 3,
+    borderColor: '#C2C2CA',
+    borderBottomWidth: 3,
   },
   containerIcon: {
     flex: 1,

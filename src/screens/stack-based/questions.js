@@ -5,21 +5,15 @@ import { apiQuestions } from '../../common/api/api-questions';
 import { ButtonIcon } from '../../components/common/button-icon';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Icon } from 'react-native-elements';
+import ShowListData from '../../components/common/show-list-data';
 
 const ShowQuestions = ({ data, navigation }) => {
   return (
-    <ScrollView>
-      {data.map(value => {
-        console.log('item', value);
-        return (
-          <QuesionItem
-            key={Math.random()}
-            value={value}
-            navigation={navigation}
-          />
-        );
-      })}
-    </ScrollView>
+    <ShowListData
+      {...this.props}
+      data={data}
+      component={<QuesionItem navigation={navigation} />}
+    />
   );
 };
 export default class Questions extends Component {

@@ -14,8 +14,8 @@ import { Header } from '../../components/header/header-layout';
 import { ButtonBack } from '../../components/header/button-back';
 import DetailsView from '../../components/posts/details-view';
 import { Icon } from 'react-native-elements';
-import { apiPosts } from '../../common/api/api-posts';
 const { width } = Dimensions.get('window');
+import CommentScreen from '../../components/comments/comment-screen';
 export default class PostDetails extends Component {
   static navigationOptions = () => {
     return {
@@ -25,31 +25,22 @@ export default class PostDetails extends Component {
   };
   constructor(props) {
     super(props);
-    this.state = {
-      data: {}
-    };
   }
-  componentWillMount() {
-    this.getPostDetail();
-  }
-
-  getPostDetail = () => {
-    let { slug } = this.props.navigation.state.params.value;
-    apiPosts
-      .getPost(slug)
-      .then(r => {
-        console.log('r', r.post.data);
-        this.setState({ data: r.post.data });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
 
   render() {
-    console.log('data', this.state.data);
-    const { user } = this.props.navigation.state.params.value;
-    const { avatar, name, username } = user.data;
+    const {
+      user,
+      slug,
+      commentators
+    } = this.props.navigation.state.params.value;
+    console.log('commentators', commentators)
+    const { avatar, name, username, id } = user.data;
+    let valueUser = {
+      id: id,
+      avatar: avatar[0],
+      name: name,
+      username: username
+    };
     return (
       <Fragment>
         <StatusBar backgroundColor="#5387c6" barStyle="light-content" />
@@ -65,7 +56,9 @@ export default class PostDetails extends Component {
               />
               <View style={{ flex: 1, marginLeft: 5 }}>
                 <Text style={{ fontSize: 13, color: '#fff' }}>{name}</Text>
-                <Text style={{ fontSize: 12, color: '#fff' }}>{username}</Text>
+                <Text style={{ fontSize: 12, color: '#fff' }}>
+                  @ {username}
+                </Text>
               </View>
             </View>
           }
@@ -103,11 +96,12 @@ export default class PostDetails extends Component {
             this.tabView = tabView;
           }}
         >
-          <DetailsView {...this.props} tabLabel="Post" data={this.state.data} />
-          <DetailsView
+          <DetailsView {...this.props} tabLabel="Post" slug={slug} />
+          <CommentScreen
+            value={valueUser}
             {...this.props}
             tabLabel="Comments"
-            data={this.state.data}
+            comments={commentators.data}
           />
         </ScrollableTabView>
       </Fragment>

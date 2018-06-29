@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PostItem from './post-item';
 import { apiPosts } from '../../common/api/api-posts';
 import ShowListData from '../common/show-list-data';
-import PTRView from 'react-native-pull-to-refresh';
+import { ActivityIndicator } from 'react-native';
 
 export default class PostsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
     };
     this.page = 1;
+    this.loading = true;
     this.getData(1);
     this._refresh = this._refresh.bind(this);
   }
@@ -18,15 +19,17 @@ export default class PostsView extends Component {
     apiPosts
       .get(this.props.chooseData, page)
       .then(r => {
-        let dataPv = this.state.data;
-        let dataNew = dataPv.concat(r.data);
-        this.setState({ data: dataNew });
+        this.setState({ data: [...this.state.data, ...r.data] });
+        this.loading = false;
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.loading = false;
+      });
   }
 
   onEndReached = () => {
-    //console.log('sss: ', this.page);
+    console.log('sss: ', this.page);
+    this.loading = true;
     this.getData(this.page);
     this.page++;
   };
@@ -41,16 +44,14 @@ export default class PostsView extends Component {
     });
   }
   render() {
-    console.log(this.state.data.length);
     return (
-      <PTRView onRefresh={this._refresh}>
-        <ShowListData
-          {...this.props}
-          data={this.state.data}
-          component={<PostItem />}
-          onEndReached={this.onEndReached}
-        />
-      </PTRView>
+          <ShowListData
+            {...this.props}
+            data={this.state.data}
+            component={<PostItem />}
+            ListFooterComponent={this.loading && <ActivityIndicator />}
+            onEndReached={() => this.onEndReached()}
+          />
     );
   }
 }

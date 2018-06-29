@@ -7,7 +7,7 @@ import { apiPosts } from '../../common/api/api-posts';
 import { apiSeries } from '../../common/api/api-series';
 import { followingData } from '../../common/static-data';
 import { Avatar } from '../common/avatar';
-import { Dimensions } from 'react-native';
+import { Dimensions, ActivityIndicator } from 'react-native';
 const { width } = Dimensions.get('window');
 
 export default class ProfileService extends Component {
@@ -17,6 +17,8 @@ export default class ProfileService extends Component {
       data: []
     };
     this.getData();
+    this.page = 1;
+    this.loading = true;
   }
 
   async getData() {
@@ -24,21 +26,30 @@ export default class ProfileService extends Component {
     let data = null;
     if (service === 2) {
       data = await apiQuestions.getQuestionsFeed('newest', {
-        page: 1,
+        page: this.page,
         limit: 20
       });
     } else if (service === 1) {
-      data = await apiPosts.get('newest', 1);
+      data = await apiPosts.get('newest', this.page);
     } else if (service === 3) {
-      data = await apiSeries.getSeriesFeed({ page: 1, limit: 20 });
+      data = await apiSeries.getSeriesFeed({ page: this.page, limit: 20 });
     } else if (service === 4) {
       data = followingData;
       return;
     } else if (service === 5) {
       data = followingData;
     }
-    this.setState({ data: data.data });
+    this.setState({ data: [...this.state.data, ...data.data] });
+    this.loading = true;
+    this.page++;
   }
+
+  onEndReached = () => {
+    console.log('sss: ', this.page);
+    this.loading = true;
+    this.getData();
+    this.page++;
+  };
 
   getComponent() {
     const { service } = this.props;
@@ -81,6 +92,8 @@ export default class ProfileService extends Component {
           service !== 4 && service !== 5 ? this.state.data : followingData.data
         }
         component={this.getComponent()}
+        ListFooterComponent={this.loading && <ActivityIndicator />}
+            onEndReached={() => this.onEndReached()}
       />
     );
   }

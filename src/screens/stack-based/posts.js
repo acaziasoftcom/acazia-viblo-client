@@ -5,8 +5,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Icon } from 'react-native-elements';
 import PostsView from '../../components/posts/post-view';
 export default class Post extends Component {
-  static navigationOptions = ({ navigation }) => {
-    const { goBack } = navigation;
+  static navigationOptions = () => {
     return {
       headerStyle: styles.styleHeader,
       headerTintColor: '#5387c6',

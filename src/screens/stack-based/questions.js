@@ -1,5 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { ScrollView, DeviceEventEmitter, StyleSheet } from 'react-native';
+import {
+  ActivityIndicator,
+  DeviceEventEmitter,
+  StyleSheet
+} from 'react-native';
 import QuesionItem from '../../components/questions/question-item';
 import { apiQuestions } from '../../common/api/api-questions';
 import { ButtonIcon } from '../../components/common/button-icon';
@@ -7,18 +11,19 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Icon } from 'react-native-elements';
 import ShowListData from '../../components/common/show-list-data';
 
-const ShowQuestions = ({ data, navigation }) => {
+const ShowQuestions = ({ data, navigation, loading, onEndReached }) => {
   return (
     <ShowListData
       {...this.props}
       data={data}
       component={<QuesionItem navigation={navigation} />}
+      ListFooterComponent={loading && <ActivityIndicator />}
+      onEndReached={() => onEndReached()}
     />
   );
 };
 export default class Questions extends Component {
   static navigationOptions = ({ navigation }) => {
-    const { goBack } = navigation;
     return {
       headerStyle: styles.styleHeader,
       headerTintColor: '#5387c6',
@@ -56,16 +61,30 @@ export default class Questions extends Component {
     this.state = {
       data: []
     };
+    this.loading = true;
+    this.page = 1;
+    this.getData(1);
   }
 
-  componentWillMount = () => {
+  getData(page) {
     apiQuestions
-      .getQuestionsFeed('newest', { page: 1, limit: 20 })
+      .getQuestionsFeed('newest', { page: page, limit: 20 })
       .then(r => {
         console.log(r);
-        this.setState({ data: r.data });
+        this.setState({ data: [...this.state.data, ...r.data] });
+        this.loading = false;
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.loading = false;
+      });
+  }
+
+  onEndReached = () => {
+    console.log('sss: ', this.page);
+    this.loading = true;
+    console.log(this.loading);
+    this.getData(this.page);
+    this.page++;
   };
 
   render() {
@@ -86,11 +105,14 @@ export default class Questions extends Component {
             navigation={this.props.navigation}
             data={this.state.data}
             tabLabel="Newest"
+            loading={this.loading}
+            onEndReached={this.onEndReached}
           />
           <ShowQuestions
             navigation={this.props.navigation}
             data={this.state.data}
             tabLabel="Unsolved"
+            onEndReached={this.onEndReached}
           />
         </ScrollableTabView>
       </Fragment>

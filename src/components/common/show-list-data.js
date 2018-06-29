@@ -10,7 +10,7 @@ export default class ShowListData extends Component {
     return <View style={styles.separator} />;
   };
   render() {
-    const { data, component, onEndReached } = this.props;
+    const { data, component, onEndReached, ListFooterComponent } = this.props;
     if (data.length === 0) {
       return <Loading />;
     }
@@ -18,26 +18,27 @@ export default class ShowListData extends Component {
     return (
       <FlatList
         data={data}
-        keyExtractor={item => item.id}
-        renderItem={(value, index) => {
+        keyExtractor={item => item.id.toString()}
+        renderItem={value => {
           if (value.index !== data.length - 1) {
             return React.cloneElement(component, {
               value: value.item,
               ...this.props,
-              key: index
+              key: value.item.id
             });
           } else {
             return React.cloneElement(component, {
               value: value.item,
               ...this.props,
-              key: index,
+              key: value.item.id,
               style: { borderBottomWidth: 0 }
             });
           }
         }}
         style={{ backgroundColor: '#fff' }}
         onEndReached={onEndReached}
-        onEndReachedThreshold={0}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={ListFooterComponent}
       />
     );
   }

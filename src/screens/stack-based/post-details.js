@@ -6,7 +6,8 @@ import {
   Dimensions,
   View,
   Text,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native';
 import { ButtonIcon } from '../../components/common/button-icon';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
@@ -14,7 +15,8 @@ import { Header } from '../../components/header/header-layout';
 import { ButtonBack } from '../../components/header/button-back';
 import DetailsView from '../../components/posts/details-view';
 import { Icon } from 'react-native-elements';
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
+import { ViewAbsolute } from '../../components/common/view-absolate';
 import CommentScreen from '../../components/comments/comment-screen';
 export default class PostDetails extends Component {
   static navigationOptions = () => {
@@ -25,6 +27,9 @@ export default class PostDetails extends Component {
   };
   constructor(props) {
     super(props);
+    this.state = {
+      isShow: false
+    };
   }
 
   render() {
@@ -33,7 +38,7 @@ export default class PostDetails extends Component {
       slug,
       commentators
     } = this.props.navigation.state.params.value;
-    console.log('commentators', commentators)
+    const { isShow } = this.state;
     const { avatar, name, username, id } = user.data;
     let valueUser = {
       id: id,
@@ -84,6 +89,12 @@ export default class PostDetails extends Component {
               onPress={() => {}}
             />
           }
+        />
+        <ViewAbsolute
+          onPress={() => {
+            this.setState({ isShow: !this.state.isShow });
+          }}
+          isShow={isShow}
         />
         <ScrollableTabView
           initialPage={0}

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Platform, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { ButtonBlank } from '../header/button-blank';
+import { Colors } from '../../common/colors';
 
 const HEADER_HEIGHT = Platform.select({
   ios: 44,
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#5387c6'
+    backgroundColor: Colors.STRONG_CYAN
   },
   noMarginTop: {
     marginTop: 0
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   },
   whiteText: {
     fontSize: 18,
-    color: '#fff'
+    color: Colors.WHITE
   }
 });
 

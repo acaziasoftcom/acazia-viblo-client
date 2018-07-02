@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import Loading from './loading';
+import { Colors } from '../../common/colors';
 export default class ShowListData extends Component {
   constructor(props) {
     super(props);
@@ -10,7 +11,13 @@ export default class ShowListData extends Component {
     return <View style={styles.separator} />;
   };
   render() {
-    const { data, component, onEndReached, ListFooterComponent } = this.props;
+    const {
+      data,
+      component,
+      onEndReached,
+      ListFooterComponent,
+      onEndReachedThreshold
+    } = this.props;
     if (data.length === 0) {
       return <Loading />;
     }
@@ -35,9 +42,11 @@ export default class ShowListData extends Component {
             });
           }
         }}
-        style={{ backgroundColor: '#fff' }}
+        style={{ backgroundColor: Colors.WHITE }}
         onEndReached={onEndReached}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={
+          onEndReachedThreshold ? onEndReachedThreshold : 0.5
+        }
         ListFooterComponent={ListFooterComponent}
       />
     );
@@ -49,6 +58,6 @@ const styles = StyleSheet.create({
     height: 1,
     flex: 1,
     marginRight: 15,
-    backgroundColor: '#CED0CE'
+    backgroundColor: Colors.GHOST
   }
 });

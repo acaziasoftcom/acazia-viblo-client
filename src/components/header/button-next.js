@@ -3,6 +3,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { Colors } from '../../common/colors';
 
 const ButtonNext = props => {
   const { onPress, style } = props;
@@ -13,7 +14,7 @@ const ButtonNext = props => {
         type="ionicon"
         name="ios-arrow-forward"
         size={24}
-        color={'rgb(193,199,208)'}
+        color={Colors.TANGAROA}
       />
     </TouchableOpacity>
   );

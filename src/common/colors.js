@@ -1,0 +1,21 @@
+const Colors = {
+  WHITE: '#fff',
+  CYAN_BLUE: '#094acd',
+  DARK_TURQUOISE: '#0AD8D8',
+  STRONG_CYAN: '#5387c6',
+  BLACK: '#000',
+  MATTERHORN: '#4a4c4f',
+  RICH_BLUE: '#E9E9F1',
+  LAVENDER: '#AFAFBD',
+  GHOST: '#CED0CE',
+  LIGHT_GREEN: '#6060EE',
+  RED: 'red',
+  TANGAROA: '#082043',
+  SCHEMES: '#686975',
+  GREY: '##71726A',
+  GREY_BLURRY: '#C2C2CA',
+  LIGHT_BLUE: '#646FF3',
+  LIGHT_GREY: '#F1F2EC'
+};
+
+export { Colors };

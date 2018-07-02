@@ -1,6 +1,7 @@
 import React from 'react';
-import { Icon, StyleSheet } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import { ButtonIcon } from '../common/button-icon';
+import { Colors } from '../../common/colors';
 
 const ButtonShare = ({ onPress, style }) => {
   return (
@@ -11,7 +12,7 @@ const ButtonShare = ({ onPress, style }) => {
         <Icon
           name="share-variant"
           type="material-community"
-          color="#fff"
+          color={Colors.WHITE}
           style={{ width: 30, height: 30 }}
         />
       }

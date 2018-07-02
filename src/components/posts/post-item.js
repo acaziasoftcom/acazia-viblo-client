@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { Colors } from '../../common/colors';
 import Markdown from 'react-native-simple-markdown';
 
 const Item = ({ icon, count, style, type }) => {
   return (
     <View style={[{ flexDirection: 'row' }, style]}>
-      <Icon name={icon} type={type} color="#71726A" size={20} />
+      <Icon name={icon} type={type} color={Colors.GREY} size={20} />
       <Text style={{ marginLeft: 5 }}>{count}</Text>
     </View>
   );
@@ -76,11 +77,11 @@ export default class PostItem extends Component {
       <TouchableOpacity
         style={[
           {
-            backgroundColor: '#fff',
+            backgroundColor: Colors.WHITE,
             marginBottom: 5,
             paddingHorizontal: 10,
             paddingVertical: 4,
-            borderColor: '#C2C2CA',
+            borderColor: Colors.GREY_BLURRY,
             borderBottomWidth: 3
           },
           this.props.style
@@ -98,7 +99,7 @@ export default class PostItem extends Component {
             }}
           />
           <View style={{ marginLeft: 10 }}>
-            <Text style={{ fontSize: 14, color: '#000' }}>{name}</Text>
+            <Text style={{ fontSize: 14, color: Colors.BLACK }}>{name}</Text>
             <Text style={{ fontSize: 13 }}>@ {username}</Text>
           </View>
         </View>
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    color: '#000',
+    color: Colors.BLACK,
     marginBottom: 12,
     marginTop: 5
   },

@@ -13,10 +13,16 @@ import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 const { width } = Dimensions.get('window');
 import { navigate } from '../actions/actions-navigaion';
+import { Colors } from '../common/colors';
 const ItemOption = ({ name, icon, onPress, type, size }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.containerItem}>
-      <Icon name={icon} type={type} color="#5387c6" size={size ? size : 24} />
+      <Icon
+        name={icon}
+        type={type}
+        color={Colors.STRONG_CYAN}
+        size={size ? size : 24}
+      />
       <Text style={{ marginLeft: 17, fontSize: 17 }}>{name}</Text>
     </TouchableOpacity>
   );
@@ -127,7 +133,10 @@ class CustomDrawer extends Component {
           <Text style={styles.textName}>Nguyễn Công Trương</Text>
         </TouchableOpacity>
         <ScrollView
-          contentContainerStyle={{ backgroundColor: '#F1F2EC', flex: 1 }}
+          contentContainerStyle={{
+            backgroundColor: Colors.LIGHT_GREY,
+            flex: 1
+          }}
         >
           {this.menuOptions().map(value => {
             return (
@@ -158,7 +167,7 @@ const styles = StyleSheet.create({
     height: 150,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: Colors.WHITE
   },
   imageAvatar: {
     width: 75,
@@ -167,7 +176,7 @@ const styles = StyleSheet.create({
     borderRadius: 38
   },
   textName: {
-    color: '#000',
+    color: Colors.BLACK,
     fontSize: 16,
     textAlign: 'center',
     fontWeight: '500'

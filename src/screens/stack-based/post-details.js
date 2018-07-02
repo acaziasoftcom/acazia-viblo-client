@@ -6,8 +6,7 @@ import {
   Dimensions,
   View,
   Text,
-  Image,
-  TouchableOpacity
+  Image
 } from 'react-native';
 import { ButtonIcon } from '../../components/common/button-icon';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
@@ -15,8 +14,9 @@ import { Header } from '../../components/header/header-layout';
 import { ButtonBack } from '../../components/header/button-back';
 import DetailsView from '../../components/posts/details-view';
 import { Icon } from 'react-native-elements';
-const { width, height } = Dimensions.get('window');
-import { ViewAbsolute } from '../../components/common/view-absolate';
+const { width } = Dimensions.get('window');
+import { ViewAbsolute } from '../../components/common/view-absolute';
+import { Colors } from '../../common/colors';
 import CommentScreen from '../../components/comments/comment-screen';
 export default class PostDetails extends Component {
   static navigationOptions = () => {
@@ -48,7 +48,10 @@ export default class PostDetails extends Component {
     };
     return (
       <Fragment>
-        <StatusBar backgroundColor="#5387c6" barStyle="light-content" />
+        <StatusBar
+          backgroundColor={Colors.STRONG_CYAN}
+          barStyle="light-content"
+        />
         <Header
           noMarginTop={Platform.OS === 'android'}
           title={
@@ -60,8 +63,10 @@ export default class PostDetails extends Component {
                 }}
               />
               <View style={{ flex: 1, marginLeft: 5 }}>
-                <Text style={{ fontSize: 13, color: '#fff' }}>{name}</Text>
-                <Text style={{ fontSize: 12, color: '#fff' }}>
+                <Text style={{ fontSize: 13, color: Colors.WHITE }}>
+                  {name}
+                </Text>
+                <Text style={{ fontSize: 12, color: Colors.WHITE }}>
                   @ {username}
                 </Text>
               </View>
@@ -73,7 +78,7 @@ export default class PostDetails extends Component {
               onPress={() => {
                 this.props.navigation.goBack();
               }}
-              color={'#fff'}
+              color={Colors.WHITE}
             />
           }
           headerRight={
@@ -82,7 +87,7 @@ export default class PostDetails extends Component {
                 <Icon
                   name="share-variant"
                   type="material-community"
-                  color="#fff"
+                  color={Colors.WHITE}
                   style={{ paddingLeft: 5 }}
                 />
               }
@@ -100,9 +105,9 @@ export default class PostDetails extends Component {
           initialPage={0}
           // onChangeTab={({ i }) => this.onChangeTab(i)}
           prerenderingSiblingsNumber={0}
-          tabBarTextStyle={{ color: '#fff' }}
-          tabBarBackgroundColor={'#5387c6'}
-          tabBarUnderlineStyle={{ backgroundColor: '#fff' }}
+          tabBarTextStyle={{ color: Colors.WHITE }}
+          tabBarBackgroundColor={Colors.STRONG_CYAN}
+          tabBarUnderlineStyle={{ backgroundColor: Colors.WHITE }}
           ref={tabView => {
             this.tabView = tabView;
           }}

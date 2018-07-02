@@ -11,6 +11,7 @@ import {
 const { width } = Dimensions.get('window');
 import Loading from '../common/loading';
 import AnswerItem from '../questions/answer-item';
+import { Colors } from '../../common/colors';
 
 export default class CommentScreen extends Component {
   render() {
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: Colors.WHITE
   },
   image: {
     height: 45,
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     borderRadius: 23,
     marginRight: 15,
     marginLeft: 10,
-    borderColor: '#E9E9F1',
+    borderColor: Colors.RICH_BLUE,
     borderWidth: 1,
     marginBottom: 5,
     marginTop: 5
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width,
     marginTop: 10,
-    borderBottomColor: '#AFAFBD',
+    borderBottomColor: Colors.LAVENDER,
     borderBottomWidth: 1
   }
 });

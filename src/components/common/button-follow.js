@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { Colors } from '../../common/colors';
 
 const ButtonFollow = ({ onPress, style }) => {
   return (
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     paddingLeft: 15,
     backgroundColor: 'transparent',
-    borderColor: '#fff',
+    borderColor: Colors.WHITE,
     borderWidth: 1,
     borderRadius: 20,
     paddingBottom: 5,

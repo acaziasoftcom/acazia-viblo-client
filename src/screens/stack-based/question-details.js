@@ -12,6 +12,7 @@ import { apiQuestions } from '../../common/api/api-questions';
 import Loading from '../../components/common/loading';
 import CommentScreen from '../../components/comments/comment-screen';
 import AnswerScreen from '../../components/questions/answer-screen';
+import { Colors } from '../../common/colors';
 export default class QuestionDetials extends Component {
   static navigationOptions = () => {
     return {
@@ -50,7 +51,10 @@ export default class QuestionDetials extends Component {
     };
     return (
       <Fragment>
-        <StatusBar backgroundColor="#5387c6" barStyle="light-content" />
+        <StatusBar
+          backgroundColor={Colors.STRONG_CYAN}
+          barStyle="light-content"
+        />
         <Header
           noMarginTop={Platform.OS === 'android'}
           title={
@@ -62,7 +66,7 @@ export default class QuestionDetials extends Component {
               onPress={() => {
                 this.props.navigation.goBack();
               }}
-              color={'#fff'}
+              color={Colors.WHITE}
             />
           }
           headerRight={
@@ -71,7 +75,7 @@ export default class QuestionDetials extends Component {
                 <Icon
                   name="share-variant"
                   type="material-community"
-                  color="#fff"
+                  color={Colors.WHITE}
                   style={{ paddingLeft: 5 }}
                 />
               }
@@ -80,13 +84,13 @@ export default class QuestionDetials extends Component {
           }
         />
         <ScrollableTabView
-          style={{ backgroundColor: '#fff' }}
+          style={{ backgroundColor: Colors.WHITE }}
           initialPage={0}
           // onChangeTab={({ i Ư}) => this.onChangeTab(i)}
           prerenderingSiblingsNumber={0}
-          tabBarTextStyle={{ color: '#fff' }}
-          tabBarBackgroundColor={'#5387c6'}
-          tabBarUnderlineStyle={{ backgroundColor: '#fff' }}
+          tabBarTextStyle={{ color: Colors.WHITE }}
+          tabBarBackgroundColor={Colors.STRONG_CYAN}
+          tabBarUnderlineStyle={{ backgroundColor: Colors.WHITE }}
           ref={tabView => {
             this.tabView = tabView;
           }}

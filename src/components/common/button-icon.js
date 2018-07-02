@@ -1,12 +1,13 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { Colors } from '../../common/colors';
 
 const ButtonIcon = ({
   style,
   onPress,
   title,
   extraElement,
-  textColor = '#fff'
+  textColor = Colors.WHITE
 }) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.row, style]}>
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   bottomText: {
-    color: '#fff',
+    color: Colors.WHITE,
     marginLeft: 10,
     textAlign: 'center',
     fontSize: 18,

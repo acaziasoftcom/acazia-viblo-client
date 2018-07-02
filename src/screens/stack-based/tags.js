@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import {
-  Platform,
+  ActivityIndicator,
   DeviceEventEmitter,
   StyleSheet,
-  View,
   Text,
   FlatList,
   Dimensions,
@@ -13,12 +12,13 @@ import {
 import { ButtonIcon } from '../../components/common/button-icon';
 import { Icon } from 'react-native-elements';
 import { apiTags } from '../../common/api/api-tags';
+import { Colors } from '../../common/colors';
 const { width } = Dimensions.get('window').width;
 export default class Tags extends Component {
   static navigationOptions = () => {
     return {
       headerStyle: styles.styleHeader,
-      headerTintColor: '#5387c6',
+      headerTintColor: Colors.STRONG_CYAN,
       headerTitle: '',
       headerLeft: (
         <ButtonIcon
@@ -26,7 +26,7 @@ export default class Tags extends Component {
             <Icon
               name="menu"
               type="material-community"
-              color="#fff"
+              color={Colors.WHITE}
               style={{ paddingLeft: 5 }}
             />
           }
@@ -43,37 +43,30 @@ export default class Tags extends Component {
     this.state = {
       data: []
     };
+    this.page = 1;
+    this.loading = true;
+    this.getData(1);
   }
 
-  componentWillMount = () => {
+  getData(page) {
     apiTags
-      .getTags({ page: 1, limit: 20 })
+      .getTags({ page: page, limit: 20 })
       .then(r => {
         console.log(r);
-        this.setState({ data: r.data });
-        apiTags
-          .associatedResource('posts', 'javascript')
-          .then(rr => {
-            console.log(rr);
-          })
-          .catch(err => console.log(err));
+        this.setState({ data: [...this.state.data, ...r.data] });
+        this.loading = false;
       })
-      .catch(err => console.log(err));
-  };
+      .catch(err => (this.loading = false));
+  }
 
+  onEndReached = () => {
+    this.loading = true;
+    this.getData(this.page);
+    this.page++;
+  };
   renderRowItem = info => {
     return (
-      <TouchableOpacity
-        style={{
-          marginBottom: 10,
-          marginLeft: 10,
-          marginRight: 10,
-          marginTop: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 85
-        }}
-      >
+      <TouchableOpacity style={styles.containerItem}>
         <Image
           style={styles.imageAvatar}
           source={{
@@ -95,6 +88,11 @@ export default class Tags extends Component {
           keyExtractor={(item, index) => index.toString()}
           renderItem={this.renderRowItem}
           contentContainerStyle={{ alignItems: 'center', marginBottom: 10 }}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={this.loading && <ActivityIndicator />}
+          onEndReached={() => {
+            this.onEndReached();
+          }}
         />
       </Fragment>
     );
@@ -103,8 +101,8 @@ export default class Tags extends Component {
 
 const styles = StyleSheet.create({
   styleHeader: {
-    backgroundColor: '#5387c6',
-    shadowColor: '#fff',
+    backgroundColor: Colors.STRONG_CYAN,
+    shadowColor: Colors.WHITE,
     shadowOpacity: 0,
     shadowRadius: 0,
     shadowOffset: {
@@ -116,10 +114,19 @@ const styles = StyleSheet.create({
     width: width,
     flex: 1,
     paddingTop: 10,
-    backgroundColor: '#fdfdfd'
+    backgroundColor: Colors.WHITE
   },
   imageAvatar: {
     width: 85,
     height: 85
+  },
+  containerItem: {
+    marginBottom: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 85
   }
 });

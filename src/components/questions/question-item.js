@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Icon } from 'react-native-elements';
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Colors } from '../../common/colors';
 export default class QuesionItem extends Component {
   render() {
     const { answers_count, comments_count, title, tags } = this.props.value;
@@ -15,11 +16,16 @@ export default class QuesionItem extends Component {
       >
         <View style={styles.containerIcon}>
           <View style={styles.containerItem}>
-            <Icon name="sort" type="font-awesome" color="#000" size={22} />
+            <Icon
+              name="sort"
+              type="font-awesome"
+              color={Colors.BLACK}
+              size={22}
+            />
             <Icon
               name="reply"
               type="material-community"
-              color="#000"
+              color={Colors.BLACK}
               size={17}
             />
           </View>
@@ -29,7 +35,7 @@ export default class QuesionItem extends Component {
           </View>
         </View>
         <View style={styles.containerDetails}>
-          <Text style={{ fontSize: 17, color: '#646FF3' }}>{title}</Text>
+          <Text style={{ fontSize: 17, color: Colors.LIGHT_BLUE }}>{title}</Text>
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-between' }}
           >
@@ -56,10 +62,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flex: 1,
     minHeight: 75,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.WHITE,
     marginBottom: 3,
-    borderColor: '#C2C2CA',
-    borderBottomWidth: 3,
+    borderColor: Colors.GREY_BLURRY,
+    borderBottomWidth: 3
   },
   containerIcon: {
     flex: 1,

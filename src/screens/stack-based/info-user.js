@@ -15,6 +15,7 @@ import { ButtonBack } from '../../components/header/button-back';
 import { apiUsers } from '../../common/api/api-users';
 import { Icon } from 'react-native-elements';
 import PostItem from '../../components/posts/post-item';
+import { Colors } from '../../common/colors';
 const { width } = Dimensions.get('window');
 
 export default class InfoUser extends Component {
@@ -47,7 +48,7 @@ export default class InfoUser extends Component {
         <Icon
           name="google-plus-box"
           type="material-community"
-          color="#D80A0A"
+          color={Colors.DARK_TURQUOISE}
           style={{ paddingLeft: 5 }}
         />
       );
@@ -56,7 +57,7 @@ export default class InfoUser extends Component {
         <Icon
           name="facebook-box"
           type="material-community"
-          color="#094ACD"
+          color={Colors.CYAN_BLUE}
           style={{ paddingLeft: 5 }}
         />
       );
@@ -66,13 +67,16 @@ export default class InfoUser extends Component {
     const { name } = this.props.navigation.state.params.value;
     const { user } = this.state;
     return (
-      <View style={{flex: 1, backgroundColor: '#fff'}}>
-        <StatusBar backgroundColor="#5387c6" barStyle="light-content" />
+      <View style={{ flex: 1, backgroundColor: Colors.WHITE }}>
+        <StatusBar
+          backgroundColor={Colors.STRONG_CYAN}
+          barStyle="light-content"
+        />
         <Header
           noMarginTop={Platform.OS === 'android'}
           title={
             <View style={styles.avatarHeader}>
-              <Text style={{ fontSize: 17, color: '#fff' }}>{name}</Text>
+              <Text style={{ fontSize: 17, color: Colors.WHITE }}>{name}</Text>
             </View>
           }
           style={{ width: width, marginTop: Platform.OS === 'ios' ? 20 : 0 }}
@@ -81,7 +85,7 @@ export default class InfoUser extends Component {
               onPress={() => {
                 this.props.navigation.goBack();
               }}
-              color={'#fff'}
+              color={Colors.WHITE}
             />
           }
           headerRight={<ButtonFollow onPress={() => {}} />}
@@ -92,10 +96,10 @@ export default class InfoUser extends Component {
               <Image style={styles.image} source={{ uri: user.avatar[0] }} />
               <View style={styles.info}>
                 <View>
-                  <Text style={{ fontSize: 20, color: 'black' }}>
+                  <Text style={{ fontSize: 20, color: Colors.BLACK }}>
                     {user.name}
                   </Text>
-                  <Text style={{ fontSize: 16, color: 'black' }}>
+                  <Text style={{ fontSize: 16, color: Colors.BLACK }}>
                     @ {user.username}
                   </Text>
                 </View>

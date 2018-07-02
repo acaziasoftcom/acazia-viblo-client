@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { Colors } from '../../common/colors';
 
 const ButtonBack = ({ onPress, color, style, size }) => {
   return (
@@ -8,7 +9,7 @@ const ButtonBack = ({ onPress, color, style, size }) => {
       <Icon
         type="material-community"
         style={styles.icon}
-        color={color ? color : '#fff'}
+        color={color ? color : Colors.WHITE}
         size={size ? size : 30}
         name="arrow-left"
       />
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   icon: {
-    color: '#fff',
+    color: Colors.WHITE,
     fontSize: 39,
     textAlign: 'center'
   }

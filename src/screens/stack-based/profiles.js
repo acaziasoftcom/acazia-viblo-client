@@ -5,14 +5,14 @@ import ScrollableTabView, {
   ScrollableTabBar
 } from 'react-native-scrollable-tab-view';
 import { Icon } from 'react-native-elements';
+import { Colors } from '../../common/colors';
 import ProfileService from '../../components/profiles/profiles';
 
 export default class Profiles extends Component {
-  static navigationOptions = ({ navigation }) => {
-    const { goBack } = navigation;
+  static navigationOptions = () => {
     return {
       headerStyle: styles.styleHeader,
-      headerTintColor: '#5387c6',
+      headerTintColor: Colors.STRONG_CYAN,
       headerTitle: '',
       headerLeft: (
         <ButtonIcon
@@ -49,14 +49,17 @@ export default class Profiles extends Component {
   render() {
     return (
       <Fragment>
-        <StatusBar backgroundColor="#5387c6" barStyle="light-content" />
+        <StatusBar
+          backgroundColor={Colors.STRONG_CYAN}
+          barStyle="light-content"
+        />
         <ScrollableTabView
           initialPage={0}
           // onChangeTab={({ i }) => this.onChangeTab(i)}
           prerenderingSiblingsNumber={0}
-          tabBarTextStyle={{ color: '#fff' }}
-          tabBarBackgroundColor={'#5387c6'}
-          tabBarUnderlineStyle={{ backgroundColor: '#fff' }}
+          tabBarTextStyle={{ color: Colors.WHITE }}
+          tabBarBackgroundColor={Colors.STRONG_CYAN}
+          tabBarUnderlineStyle={{ backgroundColor: Colors.WHITE }}
           ref={tabView => {
             this.tabView = tabView;
           }}
@@ -83,8 +86,8 @@ export default class Profiles extends Component {
 
 const styles = StyleSheet.create({
   styleHeader: {
-    backgroundColor: '#5387c6',
-    shadowColor: '#fff',
+    backgroundColor: Colors.STRONG_CYAN,
+    shadowColor: Colors.WHITE,
     shadowOpacity: 0,
     shadowRadius: 0,
     shadowOffset: {

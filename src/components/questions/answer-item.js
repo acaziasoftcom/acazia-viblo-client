@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Avatar } from '../../components/common/avatar';
-import Markdown from 'react-native-simple-markdown';
+import { Colors } from '../../common/colors';
 import { View, Text } from 'react-native';
 export default class AnswerItem extends Component {
   render() {
@@ -11,12 +11,12 @@ export default class AnswerItem extends Component {
         style={[
           {
             marginBottom: 3,
-            backgroundColor: '#fff',
+            backgroundColor: Colors.WHITE,
             paddingLeft: 7,
             paddingRight: 5,
             paddingBottom: 4,
             paddingTop: 4,
-            borderColor: '#C2C2CA',
+            borderColor: Colors.GREY_BLURRY,
             borderBottomWidth: 3
           },
           this.props.style
@@ -24,8 +24,8 @@ export default class AnswerItem extends Component {
       >
         <Avatar
           {...this.props}
-          styleName={{ color: '#000' }}
-          styleUserName={{ color: '#000' }}
+          styleName={{ color: Colors.BLACK }}
+          styleUserName={{ color: Colors.BLACK }}
           style={{ flex: 1 }}
           value={valueUser}
         />

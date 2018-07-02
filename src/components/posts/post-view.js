@@ -8,7 +8,7 @@ export default class PostsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      data: []
     };
     this.page = 1;
     this.loading = true;
@@ -45,13 +45,13 @@ export default class PostsView extends Component {
   }
   render() {
     return (
-          <ShowListData
-            {...this.props}
-            data={this.state.data}
-            component={<PostItem />}
-            ListFooterComponent={this.loading && <ActivityIndicator />}
-            onEndReached={() => this.onEndReached()}
-          />
+      <ShowListData
+        {...this.props}
+        data={this.state.data}
+        component={<PostItem />}
+        ListFooterComponent={this.loading && <ActivityIndicator />}
+        onEndReached={() => this.onEndReached()}
+      />
     );
   }
 }

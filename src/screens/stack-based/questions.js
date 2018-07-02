@@ -10,6 +10,7 @@ import { ButtonIcon } from '../../components/common/button-icon';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Icon } from 'react-native-elements';
 import ShowListData from '../../components/common/show-list-data';
+import { Colors } from '../../common/colors';
 
 const ShowQuestions = ({ data, navigation, loading, onEndReached }) => {
   return (
@@ -26,7 +27,7 @@ export default class Questions extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       headerStyle: styles.styleHeader,
-      headerTintColor: '#5387c6',
+      headerTintColor: Colors.STRONG_CYAN,
       headerTitle: '',
       headerLeft: (
         <ButtonIcon
@@ -34,7 +35,7 @@ export default class Questions extends Component {
             <Icon
               name="menu"
               type="material-community"
-              color="#fff"
+              color={Colors.WHITE}
               style={{ paddingLeft: 5 }}
             />
           }
@@ -50,7 +51,11 @@ export default class Questions extends Component {
             navigation.push('SearchScreen');
           }}
           extraElement={
-            <Icon name="magnify" type="material-community" color="#fff" />
+            <Icon
+              name="magnify"
+              type="material-community"
+              color={Colors.WHITE}
+            />
           }
         />
       )
@@ -94,9 +99,9 @@ export default class Questions extends Component {
           initialPage={0}
           // onChangeTab={({ i }) => this.onChangeTab(i)}
           prerenderingSiblingsNumber={0}
-          tabBarTextStyle={{ color: '#fff' }}
-          tabBarBackgroundColor={'#5387c6'}
-          tabBarUnderlineStyle={{ backgroundColor: '#fff' }}
+          tabBarTextStyle={{ color: Colors.WHITE }}
+          tabBarBackgroundColor={Colors.STRONG_CYAN}
+          tabBarUnderlineStyle={{ backgroundColor: Colors.WHITE }}
           ref={tabView => {
             this.tabView = tabView;
           }}
@@ -122,8 +127,8 @@ export default class Questions extends Component {
 
 const styles = StyleSheet.create({
   styleHeader: {
-    backgroundColor: '#5387c6',
-    shadowColor: '#fff',
+    backgroundColor: Colors.STRONG_CYAN,
+    shadowColor: Colors.WHITE,
     shadowOpacity: 0,
     shadowRadius: 0,
     shadowOffset: {

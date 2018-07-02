@@ -9,6 +9,7 @@ import { followingData } from '../../common/static-data';
 import { Avatar } from '../common/avatar';
 import { Dimensions, ActivityIndicator } from 'react-native';
 const { width } = Dimensions.get('window');
+import { Colors } from '../../common/colors';
 
 export default class ProfileService extends Component {
   constructor(props) {
@@ -70,8 +71,8 @@ export default class ProfileService extends Component {
             borderBottomColor: '#D7D8E6',
             borderBottomWidth: 0.5
           }}
-          styleName={{ color: 'black', fontSize: 17 }}
-          styleUserName={{ color: 'black', fontSize: 14 }}
+          styleName={{ color: Colors.BLACK, fontSize: 17 }}
+          styleUserName={{ color: Colors.BLACK, fontSize: 14 }}
           styleImage={{
             height: 50,
             width: 50,
@@ -93,7 +94,8 @@ export default class ProfileService extends Component {
         }
         component={this.getComponent()}
         ListFooterComponent={this.loading && <ActivityIndicator />}
-            onEndReached={() => this.onEndReached()}
+        onEndReached={() => this.onEndReached()}
+        onEndReachedThreshold={0}
       />
     );
   }

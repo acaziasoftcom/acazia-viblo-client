@@ -8,6 +8,7 @@ import { apiSeries } from '../../common/api/api-series';
 import { ButtonShare } from '../../components/header/button-share';
 import DetailsView from '../../components/posts/details-view';
 import Loading from '../../components/common/loading';
+import { Colors } from '../../common/colors';
 export default class SeriesDetail extends Component {
   static navigationOptions = {
     header: null
@@ -72,9 +73,9 @@ export default class SeriesDetail extends Component {
           headerRight={<ButtonShare />}
         />
         <ScrollableTabView
-          tabBarTextStyle={{ color: '#fff' }}
-          tabBarBackgroundColor={'#5387c6'}
-          tabBarUnderlineStyle={{ backgroundColor: '#fff' }}
+          tabBarTextStyle={{ color: Colors.WHITE }}
+          tabBarBackgroundColor={Colors.STRONG_CYAN}
+          tabBarUnderlineStyle={{ backgroundColor: Colors.WHITE }}
           ref={tabView => {
             this.tabView = tabView;
           }}

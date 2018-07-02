@@ -10,6 +10,7 @@ import {
 import { apiPosts } from '../../common/api/api-posts';
 import Loading from '../common/loading';
 const { width } = Dimensions.get('window');
+import { Colors } from '../../common/colors';
 import Markdown from 'react-native-simple-markdown';
 
 export default class DetailsView extends Component {
@@ -87,10 +88,10 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingBottom: 20,
     paddingRight: 5,
-    backgroundColor: '#fff'
+    backgroundColor: Colors.WHITE
   },
   containerIcon: {
-    borderColor: '#686975',
+    borderColor: Colors.SCHEMES,
     borderWidth: 0.5,
     borderRadius: 20,
     marginLeft: 4,

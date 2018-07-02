@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { StyleSheet, Dimensions, Text, TouchableOpacity } from 'react-native';
 const { width, height } = Dimensions.get('window');
 import { Icon } from 'react-native-elements';
+import { Colors } from '../../common/colors';
 const ViewAbsolute = ({ isShow, onPress }) => {
   return (
     <Fragment>
@@ -10,7 +11,7 @@ const ViewAbsolute = ({ isShow, onPress }) => {
           <Icon
             name="menu-up"
             type="material-community"
-            color="#6060EE"
+            color={Colors.LIGHT_GREEN}
             size={40}
           />
         </TouchableOpacity>
@@ -20,7 +21,7 @@ const ViewAbsolute = ({ isShow, onPress }) => {
           <Icon
             name="menu-down"
             type="material-community"
-            color="red"
+            color={Colors.RED}
             size={40}
           />
         </TouchableOpacity>
@@ -37,11 +38,11 @@ const styles = StyleSheet.create({
     height: 64,
     width: 64,
     borderRadius: 32,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.WHITE,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#6060EE',
+    borderColor: Colors.LIGHT_GREEN,
     position: 'absolute',
     marginTop: height - 114,
     marginLeft: width - 84,

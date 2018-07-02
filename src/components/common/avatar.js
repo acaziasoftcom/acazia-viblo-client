@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Colors } from '../../common/colors';
 
 const Avatar = ({
   value,
@@ -43,11 +44,11 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 13,
-    color: '#fff'
+    color: Colors.WHITE
   },
   username: {
     fontSize: 12,
-    color: '#fff'
+    color: Colors.WHITE
   }
 });
 

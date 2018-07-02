@@ -5,6 +5,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions
 } from 'react-native';
+import { Colors } from '../../common/colors';
 
 const { width } = Dimensions.get('window');
 export default class ModalManager extends Component {
@@ -62,7 +63,7 @@ export default class ModalManager extends Component {
                 paddingVertical: 20,
                 paddingLeft: 10,
                 justifyContent: 'center',
-                backgroundColor: '#fff',
+                backgroundColor: Colors.WHITE,
                 borderRadius: 5
               }}
             >

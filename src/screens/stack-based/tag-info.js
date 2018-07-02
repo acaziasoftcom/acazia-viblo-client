@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import { StyleSheet, StatusBar, View, Text } from 'react-native';
+import { StatusBar, View, Text } from 'react-native';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import PostsView from '../../components/posts/post-view';
 import { ButtonFollow } from '../../components/common/button-follow';
 import { Header } from '../../components/header/header-layout';
 import { ButtonBack } from '../../components/header/button-back';
+import { Colors } from '../../common/colors';
 
 export default class TagInfo extends Component {
   static navigationOptions = () => {
@@ -19,12 +20,15 @@ export default class TagInfo extends Component {
   render() {
     return (
       <Fragment>
-        <StatusBar backgroundColor="#5387c6" barStyle="light-content" />
+        <StatusBar
+          backgroundColor={Colors.STRONG_CYAN}
+          barStyle="light-content"
+        />
         <Header
           noMarginTop={Platform.OS === 'android'}
           title={
             <View style={styles.avatarHeader}>
-              <Text style={{ fontSize: 17, color: '#fff' }}>{name}</Text>
+              <Text style={{ fontSize: 17, color: Colors.WHITE }}>{name}</Text>
             </View>
           }
           style={{ width: width, marginTop: Platform.OS === 'ios' ? 20 : 0 }}
@@ -33,7 +37,7 @@ export default class TagInfo extends Component {
               onPress={() => {
                 this.props.navigation.goBack();
               }}
-              color={'#fff'}
+              color={Colors.WHITE}
             />
           }
           headerRight={<ButtonFollow onPress={() => {}} />}
@@ -41,9 +45,9 @@ export default class TagInfo extends Component {
         <ScrollableTabView
           initialPage={0}
           prerenderingSiblingsNumber={0}
-          tabBarTextStyle={{ color: '#fff' }}
-          tabBarBackgroundColor={'#5387c6'}
-          tabBarUnderlineStyle={{ backgroundColor: '#fff' }}
+          tabBarTextStyle={{ color: Colors.WHITE }}
+          tabBarBackgroundColor={Colors.STRONG_CYAN}
+          tabBarUnderlineStyle={{ backgroundColor: Colors.WHITE }}
           ref={tabView => {
             this.tabView = tabView;
           }}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AnswerItem from './answer-item';
 import { ScrollView, View, Text } from 'react-native';
+import { Colors } from '../../common/colors';
 export default class AnswerScreen extends Component {
   render() {
     const { data } = this.props;
@@ -8,7 +9,11 @@ export default class AnswerScreen extends Component {
     if (data.length === 0) {
       return (
         <View
-          style={{ flex: 1, backgroundColor: '#fff', alignItems: 'center' }}
+          style={{
+            flex: 1,
+            backgroundColor: Colors.WHITE,
+            alignItems: 'center'
+          }}
         >
           <Text style={{ marginTop: 20, fontSize: 16 }}>No answer yet</Text>
         </View>
@@ -16,7 +21,7 @@ export default class AnswerScreen extends Component {
     }
     return (
       <ScrollView
-        contentContainerStyle={{ paddingTop: 5, backgroundColor: '#fff' }}
+        contentContainerStyle={{ paddingTop: 5, backgroundColor: Colors.WHITE }}
       >
         {data.map((value, index) => {
           const { avatar, name, username, id } = value.user.data;

@@ -1,4 +1,4 @@
-package com.viblo;
+package com.acaziasoft.viblo;
 
 import com.facebook.react.ReactActivity;
 

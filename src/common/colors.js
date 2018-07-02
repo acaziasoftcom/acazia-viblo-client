@@ -12,7 +12,7 @@ const Colors = {
   RED: 'red',
   TANGAROA: '#082043',
   SCHEMES: '#686975',
-  GREY: '##71726A',
+  GREY: '#71726A',
   GREY_BLURRY: '#C2C2CA',
   LIGHT_BLUE: '#646FF3',
   LIGHT_GREY: '#F1F2EC'

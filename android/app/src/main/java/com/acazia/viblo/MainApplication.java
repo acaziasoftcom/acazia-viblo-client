@@ -1,4 +1,4 @@
-package com.viblo;
+package com.acaziasoft.viblo;
 
 import android.app.Application;
 

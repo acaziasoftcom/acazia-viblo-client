@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PostItem from './post-item';
 import { apiPosts } from '../../common/api/api-posts';
 import ShowListData from '../common/show-list-data';
 import { ActivityIndicator } from 'react-native';
+import { apiTags } from '../../common/api/api-tags';
 
 export default class PostsView extends Component {
   constructor(props) {
@@ -16,6 +17,19 @@ export default class PostsView extends Component {
     this._refresh = this._refresh.bind(this);
   }
   getData(page) {
+    const { isTag, slug } = this.props;
+    if (isTag) {
+      return apiTags
+        .getTagInfo(slug)
+        .then(r => {
+          console.log(r);
+          this.setState({ data: [...this.state.data, ...r.data] });
+          this.loading = false;
+        })
+        .catch(err => {
+          this.loading = false;
+        });
+    }
     apiPosts
       .get(this.props.chooseData, page)
       .then(r => {

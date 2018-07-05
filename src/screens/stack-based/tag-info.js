@@ -1,46 +1,66 @@
 import React, { Component, Fragment } from 'react';
-import { StatusBar, View, Text } from 'react-native';
+import { StyleSheet, StatusBar, DeviceEventEmitter } from 'react-native';
+import { ButtonIcon } from '../../components/common/button-icon';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import { Icon } from 'react-native-elements';
 import PostsView from '../../components/posts/post-view';
-import { ButtonFollow } from '../../components/common/button-follow';
-import { Header } from '../../components/header/header-layout';
-import { ButtonBack } from '../../components/header/button-back';
 import { Colors } from '../../common/colors';
 
 export default class TagInfo extends Component {
   static navigationOptions = () => {
     return {
-      header: null,
-      headerMode: 'screen'
+      headerStyle: styles.styleHeader,
+      headerTintColor: Colors.STRONG_CYAN,
+      headerTitle: '',
+      headerLeft: (
+        <ButtonIcon
+          extraElement={
+            <Icon
+              name="menu"
+              type="material-community"
+              color={Colors.WHITE}
+              style={{ paddingLeft: 5 }}
+            />
+          }
+          onPress={() => {
+            DeviceEventEmitter.emit('DRAWER_TOGGLE', true);
+          }}
+          title={'Home'}
+        />
+      ),
+      headerRight: (
+        <ButtonIcon
+          onPress={() => {
+            navigation.push('SearchScreen');
+          }}
+          extraElement={
+            <Icon
+              name="magnify"
+              type="material-community"
+              color={Colors.WHITE}
+            />
+          }
+        />
+      )
     };
   };
   constructor(props) {
     super(props);
   }
+
   render() {
+    console.log(this.props);
+    const {
+      followers_count,
+      posts_count,
+      questions_count,
+      slug
+    } = this.props.navigation.state.params.data;
     return (
       <Fragment>
         <StatusBar
           backgroundColor={Colors.STRONG_CYAN}
           barStyle="light-content"
-        />
-        <Header
-          noMarginTop={Platform.OS === 'android'}
-          title={
-            <View style={styles.avatarHeader}>
-              <Text style={{ fontSize: 17, color: Colors.WHITE }}>{name}</Text>
-            </View>
-          }
-          style={{ width: width, marginTop: Platform.OS === 'ios' ? 20 : 0 }}
-          headerLeft={
-            <ButtonBack
-              onPress={() => {
-                this.props.navigation.goBack();
-              }}
-              color={Colors.WHITE}
-            />
-          }
-          headerRight={<ButtonFollow onPress={() => {}} />}
         />
         <ScrollableTabView
           initialPage={0}
@@ -52,19 +72,38 @@ export default class TagInfo extends Component {
             this.tabView = tabView;
           }}
         >
-          <PostsView {...this.props} chooseData={'newest'} tabLabel="Newest" />
+          <PostsView
+            {...this.props}
+            chooseData={'newest'}
+            tabLabel={posts_count + ' posts'}
+            isTag
+            slug={slug}
+          />
           <PostsView
             {...this.props}
             chooseData={'editors-choice'}
-            tabLabel="Editors choice"
+            tabLabel={questions_count + ' questions'}
           />
           <PostsView
             {...this.props}
             chooseData={'trending'}
-            tabLabel="Trending"
+            tabLabel={followers_count + ' followers'}
           />
         </ScrollableTabView>
       </Fragment>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  styleHeader: {
+    backgroundColor: Colors.STRONG_CYAN,
+    shadowColor: Colors.WHITE,
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    shadowOffset: {
+      height: 0
+    },
+    elevation: 0
+  }
+});

@@ -16,7 +16,9 @@ export default class ShowListData extends Component {
       component,
       onEndReached,
       ListFooterComponent,
-      onEndReachedThreshold
+      onEndReachedThreshold,
+      numColumns = 1,
+      style
     } = this.props;
     if (data.length === 0) {
       return <Loading />;
@@ -26,6 +28,7 @@ export default class ShowListData extends Component {
       <FlatList
         data={data}
         keyExtractor={item => item.id.toString()}
+        numColumns={numColumns}
         renderItem={value => {
           if (value.index !== data.length - 1) {
             return React.cloneElement(component, {
@@ -42,7 +45,7 @@ export default class ShowListData extends Component {
             });
           }
         }}
-        style={{ backgroundColor: Colors.WHITE }}
+        style={[{ backgroundColor: Colors.WHITE }, style]}
         onEndReached={onEndReached}
         onEndReachedThreshold={
           onEndReachedThreshold ? onEndReachedThreshold : 0.5

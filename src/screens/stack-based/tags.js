@@ -4,7 +4,6 @@ import {
   DeviceEventEmitter,
   StyleSheet,
   Text,
-  FlatList,
   Dimensions,
   TouchableOpacity,
   Image
@@ -12,7 +11,9 @@ import {
 import { ButtonIcon } from '../../components/common/button-icon';
 import { Icon } from 'react-native-elements';
 import { apiTags } from '../../common/api/api-tags';
+import ShowListData from '../../components/common/show-list-data';
 import { Colors } from '../../common/colors';
+import TagItem from '../../components/tags/tag-item';
 const { width } = Dimensions.get('window').width;
 export default class Tags extends Component {
   static navigationOptions = () => {
@@ -64,37 +65,17 @@ export default class Tags extends Component {
     this.getData(this.page);
     this.page++;
   };
-  renderRowItem = info => {
-    return (
-      <TouchableOpacity style={styles.containerItem}>
-        <Image
-          style={styles.imageAvatar}
-          source={{
-            uri: info.item.image
-          }}
-        />
-        <Text>{info.item.name}</Text>
-      </TouchableOpacity>
-    );
-  };
-
   render() {
     return (
-      <Fragment>
-        <FlatList
-          style={styles.container}
-          data={this.state.data}
-          numColumns={3}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={this.renderRowItem}
-          contentContainerStyle={{ alignItems: 'center', marginBottom: 10 }}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={this.loading && <ActivityIndicator />}
-          onEndReached={() => {
-            this.onEndReached();
-          }}
-        />
-      </Fragment>
+      <ShowListData
+        {...this.props}
+        style={{ alignItems: 'center', flex: 1 }}
+        numColumns={3}
+        data={this.state.data}
+        component={<TagItem />}
+        ListFooterComponent={this.loading && <ActivityIndicator />}
+        onEndReached={() => this.onEndReached()}
+      />
     );
   }
 }
@@ -109,24 +90,5 @@ const styles = StyleSheet.create({
       height: 0
     },
     elevation: 0
-  },
-  container: {
-    width: width,
-    flex: 1,
-    paddingTop: 10,
-    backgroundColor: Colors.WHITE
-  },
-  imageAvatar: {
-    width: 85,
-    height: 85
-  },
-  containerItem: {
-    marginBottom: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 85
   }
 });

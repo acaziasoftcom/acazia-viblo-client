@@ -11,17 +11,23 @@ const ViewAbsolute = ({ isShow, onPress }) => {
           <Icon
             name="menu-up"
             type="material-community"
-            color={Colors.LIGHT_GREEN}
+            color={Colors.STRONG_CYAN}
             size={40}
           />
         </TouchableOpacity>
       )}
       {isShow && (
-        <TouchableOpacity style={[styles.buttonAbsolute, styles.cycle]}>
+        <TouchableOpacity
+          style={[
+            styles.buttonAbsolute,
+            styles.cycle,
+            { marginTop: height - 175 }
+          ]}
+        >
           <Icon
             name="menu-down"
             type="material-community"
-            color={Colors.RED}
+            color={Colors.STRONG_CYAN}
             size={40}
           />
         </TouchableOpacity>
@@ -35,26 +41,31 @@ const ViewAbsolute = ({ isShow, onPress }) => {
 
 const styles = StyleSheet.create({
   buttonAbsolute: {
-    height: 64,
-    width: 64,
-    borderRadius: 32,
+    height: 62,
+    width: 62,
+    borderRadius: 31,
     backgroundColor: Colors.WHITE,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: Colors.LIGHT_GREEN,
+    borderColor: Colors.STRONG_CYAN,
     position: 'absolute',
     marginTop: height - 114,
     marginLeft: width - 84,
-    zIndex: 9999999
+    zIndex: 9999999,
+    shadowColor: Colors.BLACK,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 9
   },
   cycle: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
+    height: 38,
+    width: 38,
+    borderRadius: 19,
     marginBottom: 50,
     marginTop: height - 228,
-    marginLeft: width - 73
+    marginLeft: width - 70
   }
 });
 

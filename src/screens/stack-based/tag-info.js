@@ -5,6 +5,9 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Icon } from 'react-native-elements';
 import PostsView from '../../components/posts/post-view';
 import { Colors } from '../../common/colors';
+import { ShowQuestions } from '../../components/questions/show-questions';
+import { apiTags } from '../../common/api/api-tags';
+import  ProfileService from '../../components/profiles/profiles';
 
 export default class TagInfo extends Component {
   static navigationOptions = () => {
@@ -46,6 +49,27 @@ export default class TagInfo extends Component {
   };
   constructor(props) {
     super(props);
+    this.getData();
+  }
+
+  getData() {
+    const { slug } = this.props.navigation.state.params.data;
+    apiTags
+      .getTagInfo(slug)
+      .then(r => {
+        console.log(r);
+        apiTags
+          .associatedResource('posts', r.data.slug, { page: 1, limit: 10 })
+          .then(r1 => {
+            console.log(r1);
+          })
+          .catch(err1 => {
+            console.log(err1);
+          });
+      })
+      .catch(err => {
+        this.loading = false;
+      });
   }
 
   render() {
@@ -79,14 +103,17 @@ export default class TagInfo extends Component {
             isTag
             slug={slug}
           />
-          <PostsView
+          <ShowQuestions
             {...this.props}
-            chooseData={'editors-choice'}
+            isTag
             tabLabel={questions_count + ' questions'}
+            slug={slug}
           />
-          <PostsView
+          <ProfileService
             {...this.props}
-            chooseData={'trending'}
+            service={4}
+            isTag
+            slug={slug}
             tabLabel={followers_count + ' followers'}
           />
         </ScrollableTabView>

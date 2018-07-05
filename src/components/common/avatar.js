@@ -19,7 +19,7 @@ const Avatar = ({
     >
       <Image
         style={[styles.image, styleImage]}
-        source={{ uri: value.avatar }}
+        source={{ uri: value.avatar[0] }}
       />
       <View style={styles.info_person}>
         <Text style={[styles.name, styleName]}>{value.name}</Text>

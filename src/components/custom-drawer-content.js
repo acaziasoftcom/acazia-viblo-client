@@ -84,7 +84,7 @@ class CustomDrawer extends Component {
         icon: 'bell-sleep',
         size: 27,
         onPress: () => {
-          alert('vao 5');
+          this.showScreen('AnnouncementsScreen');
         }
       },
       {

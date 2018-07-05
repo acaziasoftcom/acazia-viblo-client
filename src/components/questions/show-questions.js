@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import PostItem from './post-item';
-import { apiPosts } from '../../common/api/api-posts';
-import ShowListData from '../common/show-list-data';
 import { ActivityIndicator } from 'react-native';
+import QuesionItem from './question-item';
+import ShowListData from '../../components/common/show-list-data';
+import { apiQuestions } from '../../common/api/api-questions';
 import { apiTags } from '../../common/api/api-tags';
-
-export default class PostsView extends Component {
+class ShowQuestions extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +18,7 @@ export default class PostsView extends Component {
     const { isTag, slug } = this.props;
     if (isTag) {
       return apiTags
-        .associatedResource('posts', slug, { litmit: 10, page: page })
+        .associatedResource('questions', slug, { litmit: 10, page: page })
         .then(r => {
           console.log(r);
           this.setState({ data: [...this.state.data, ...r.data] });
@@ -29,9 +28,10 @@ export default class PostsView extends Component {
           this.loading = false;
         });
     }
-    apiPosts
-      .get(this.props.chooseData, page)
+    apiQuestions
+      .getQuestionsFeed('newest', { page: page, limit: 20 })
       .then(r => {
+        console.log(r);
         this.setState({ data: [...this.state.data, ...r.data] });
         this.loading = false;
       })
@@ -46,16 +46,18 @@ export default class PostsView extends Component {
     this.getData(this.page);
     this.page++;
   };
-
   render() {
+    const { navigation } = this.props;
     return (
       <ShowListData
         {...this.props}
         data={this.state.data}
-        component={<PostItem />}
+        component={<QuesionItem navigation={navigation} />}
         ListFooterComponent={this.loading && <ActivityIndicator />}
         onEndReached={() => this.onEndReached()}
       />
     );
   }
 }
+
+export { ShowQuestions };

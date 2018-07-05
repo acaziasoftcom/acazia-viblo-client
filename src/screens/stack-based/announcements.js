@@ -1,14 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import { DeviceEventEmitter, StyleSheet } from 'react-native';
-import { ShowQuestions } from '../../components/questions/show-questions';
-import { apiQuestions } from '../../common/api/api-questions';
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, DeviceEventEmitter } from 'react-native';
 import { ButtonIcon } from '../../components/common/button-icon';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { Icon } from 'react-native-elements';
 import { Colors } from '../../common/colors';
-
-export default class Questions extends Component {
-  static navigationOptions = ({ navigation }) => {
+export default class Announcements extends Component {
+  static navigationOptions = () => {
     return {
       headerStyle: styles.styleHeader,
       headerTintColor: Colors.STRONG_CYAN,
@@ -26,7 +22,7 @@ export default class Questions extends Component {
           onPress={() => {
             DeviceEventEmitter.emit('DRAWER_TOGGLE', true);
           }}
-          title={'Questions'}
+          title={'Announcements'}
         />
       ),
       headerRight: (
@@ -45,28 +41,34 @@ export default class Questions extends Component {
       )
     };
   };
-  constructor(props) {
-    super(props);
-  }
 
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       data: []
+//     };
+//     this.page = 1;
+//     this.loading = true;
+//     this.getData(1);
+//   }
+//   getData(page) {
+//     apiNotifications
+//       .getNotificationSettings()
+//       .then(r => console.log(r))
+//       .catch(err => console.log(err));
+//   }
+
+//   onEndReached = () => {
+//     console.log('sss: ', this.page);
+//     this.loading = true;
+//     this.getData(this.page);
+//     this.page++;
+//   };
   render() {
     return (
-      <Fragment>
-        <ScrollableTabView
-          initialPage={0}
-          // onChangeTab={({ i }) => this.onChangeTab(i)}
-          prerenderingSiblingsNumber={0}
-          tabBarTextStyle={{ color: Colors.WHITE }}
-          tabBarBackgroundColor={Colors.STRONG_CYAN}
-          tabBarUnderlineStyle={{ backgroundColor: Colors.WHITE }}
-          ref={tabView => {
-            this.tabView = tabView;
-          }}
-        >
-          <ShowQuestions tabLabel="Newest" {...this.props} />
-          <ShowQuestions tabLabel="Unsolved" {...this.props} />
-        </ScrollableTabView>
-      </Fragment>
+      <View>
+        <Text>Sẽ có sau</Text>
+      </View>
     );
   }
 }

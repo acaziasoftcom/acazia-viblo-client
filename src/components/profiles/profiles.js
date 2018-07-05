@@ -6,6 +6,7 @@ import PostItem from '../posts/post-item';
 import { apiPosts } from '../../common/api/api-posts';
 import { apiSeries } from '../../common/api/api-series';
 import { followingData } from '../../common/static-data';
+import { apiTags } from '../../common/api/api-tags';
 import { Avatar } from '../common/avatar';
 import { Dimensions, ActivityIndicator } from 'react-native';
 const { width } = Dimensions.get('window');
@@ -23,7 +24,7 @@ export default class ProfileService extends Component {
   }
 
   async getData() {
-    const { service } = this.props;
+    const { service, isTag, slug } = this.props;
     let data = null;
     if (service === 2) {
       data = await apiQuestions.getQuestionsFeed('newest', {
@@ -35,13 +36,23 @@ export default class ProfileService extends Component {
     } else if (service === 3) {
       data = await apiSeries.getSeriesFeed({ page: this.page, limit: 20 });
     } else if (service === 4) {
-      data = followingData;
-      return;
+      if (isTag) {
+        data = await apiTags.associatedResource('followers', slug, {
+          litmit: 10,
+          page: this.page
+        });
+        console.log(data);
+      } else {
+        data = followingData;
+      }
     } else if (service === 5) {
+      console.log('1');
       data = followingData;
     }
+
     this.setState({ data: [...this.state.data, ...data.data] });
-    this.loading = true;
+    console.log('1: ', this.state.data);
+    this.loading = false;
     this.page++;
   }
 
@@ -85,13 +96,21 @@ export default class ProfileService extends Component {
     }
   }
   render() {
-    const { service } = this.props;
+    const { service, isTag } = this.props;
+    let data = [];
+    if (service !== 4 && service !== 5) {
+      data = this.state.data;
+    } else {
+      if (isTag) {
+        data = this.state.data;
+      } else {
+        data = followingData.data;
+      }
+    }
     return (
       <ShowListData
         {...this.props}
-        data={
-          service !== 4 && service !== 5 ? this.state.data : followingData.data
-        }
+        data={data}
         component={this.getComponent()}
         ListFooterComponent={this.loading && <ActivityIndicator />}
         onEndReached={() => this.onEndReached()}

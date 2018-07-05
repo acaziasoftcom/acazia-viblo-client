@@ -23,7 +23,7 @@ const api = {
     ).then(result => {
       return result.json();
     });
-  },    
+  },
 
   put: (endpoint: string, params: Object) => {
     return fetch(SERVICE_ENDPOINT_REST_API_URL + endpoint, {

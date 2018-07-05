@@ -16,6 +16,7 @@ import Tags from '../screens/stack-based/tags';
 import Profiles from '../screens/stack-based/profiles';
 import InfoUser from '../screens/stack-based/info-user';
 import TagInfo from '../screens/stack-based/tag-info';
+import Announcements from '../screens/stack-based/announcements';
 const { width } = Dimensions.get('window');
 
 const routeConfig = {
@@ -29,7 +30,8 @@ const routeConfig = {
   TagsScreen: { screen: Tags },
   ProfilesScreen: { screen: Profiles },
   InfoUserScreen: { screen: InfoUser },
-  TagInfoScreen: { screen: TagInfo }
+  TagInfoScreen: { screen: TagInfo },
+  AnnouncementsScreen: { screen: Announcements }
 };
 
 const stackNavigatorConfig = {
